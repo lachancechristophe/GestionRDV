@@ -1,4 +1,4 @@
-package ca.qc.cgmatane.gestionrdv;
+package ca.qc.cgmatane.gestionrdv.vue;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,7 +10,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import ca.qc.cgmatane.gestionrdv.R;
+
+public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
