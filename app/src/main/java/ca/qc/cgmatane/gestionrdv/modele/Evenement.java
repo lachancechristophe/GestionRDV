@@ -17,6 +17,7 @@ public class Evenement {
         this.nom_endroit = nom_endroit;
         this.pointGPS = pointGPS;
         this.moment = moment;
+
     }
 
     public String getNom() {
