@@ -2,11 +2,13 @@ package ca.qc.cgmatane.gestionrdv.vue;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -15,11 +17,15 @@ import ca.qc.cgmatane.gestionrdv.R;
 public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private int compteurTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        compteurTemp = 1;
         setContentView(R.layout.vue_carte_accueil);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -46,5 +52,37 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
         mMap.addMarker(new MarkerOptions().position(matane).title("Marker in Matane"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(matane));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(matane, 12f));
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                Toast.makeText(
+                        vueCarteAccueil.this,
+                        "Lat : " + latLng.latitude + " , "
+                                + "Long : " + latLng.longitude,
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener(){
+            @Override
+            public void onMapLongClick(LatLng point) {
+                mMap.addMarker(new MarkerOptions()
+                        .position(point)
+                        .title("Évènement #" + compteurTemp)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                compteurTemp++;
+            }
+
+
+            //mMap.setOnInfoWindowClickListener(RegActivity.this);
+        });
+
+
+
+
+
     }
+
+
 }
