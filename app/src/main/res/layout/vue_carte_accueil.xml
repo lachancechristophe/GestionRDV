@@ -9,7 +9,7 @@
     tools:context=".vue.vueCarteAccueil">
 
     <Button
-    android:id="@+id/vueCarteActionNaviguesListe"
+    android:id="@+id/vueCarteActionNaviguerListe"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="right|top"
@@ -17,5 +17,15 @@
     android:padding="10dp"
     android:layout_marginTop="20dp"
     android:paddingRight="10dp"/>
+
+    <Button
+        android:id="@+id/vueCarteActionNaviguerAjoutEvenement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:text="Ajouter un événement"
+        android:padding="10dp"
+        android:layout_marginTop="50dp"
+        android:paddingRight="10dp"/>
 
     </fragment>
