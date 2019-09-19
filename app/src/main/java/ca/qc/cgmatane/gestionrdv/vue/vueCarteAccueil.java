@@ -1,7 +1,10 @@
 package ca.qc.cgmatane.gestionrdv.vue;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,8 +19,15 @@ import ca.qc.cgmatane.gestionrdv.R;
 
 public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallback {
 
+    public static final int ACTIVITE_AJOUTER_EVENEMENT = 1;
+
     private GoogleMap mMap;
     private int compteurTemp;
+
+    private Button vueCarteActionNaviguerListe;
+    private Button vueCarteActionNaviguerAjouterEvenement;
+
+    private Intent intentionAjouterEvenement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +40,38 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        vueCarteActionNaviguerListe = (Button)findViewById(R.id.vue_carte_action_naviguer_liste);
+        vueCarteActionNaviguerListe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                naviguerListeEvenements();
+            }
+        });
+
+        vueCarteActionNaviguerAjouterEvenement = (Button)findViewById(R.id.vue_carte_action_naviguer_ajout_evenement);
+        vueCarteActionNaviguerAjouterEvenement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                naviguerAjouterEvenements();
+            }
+        });
+
+        intentionAjouterEvenement = new Intent(this, AjouterEvenement.class);
+    }
+
+    protected void onActivityResult(int activite, int resultat, Intent donnees){
+        switch(activite){
+
+        }
+    }
+
+    private void naviguerListeEvenements(){
+    }
+
+    private void naviguerAjouterEvenements(){
+
+        startActivityForResult(intentionAjouterEvenement, ACTIVITE_AJOUTER_EVENEMENT);
     }
 
 

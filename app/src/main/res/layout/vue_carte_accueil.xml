@@ -9,23 +9,23 @@
     tools:context=".vue.vueCarteAccueil">
 
     <Button
-    android:id="@+id/vueCarteActionNaviguerListe"
+    android:id="@+id/vue_carte_action_naviguer_liste"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="right|top"
+    android:layout_gravity="center_horizontal|top"
     android:text="Voir la liste des événements"
     android:padding="10dp"
     android:layout_marginTop="20dp"
     android:paddingRight="10dp"/>
 
     <Button
-        android:id="@+id/vueCarteActionNaviguerAjoutEvenement"
+        android:id="@+id/vue_carte_action_naviguer_ajout_evenement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
+        android:layout_gravity="center_horizontal|top"
         android:text="Ajouter un événement"
         android:padding="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:paddingRight="10dp"/>
 
     </fragment>
