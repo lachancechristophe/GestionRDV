@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EvenementDAO {
-    public EvenementDAO instance;
-    public EvenementDAO getInstance(){
+    public static EvenementDAO instance;
+    public static EvenementDAO getInstance(){
         if(instance == null) instance = new EvenementDAO();
         return instance;
     }
