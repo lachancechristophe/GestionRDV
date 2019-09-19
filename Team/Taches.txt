@@ -1,17 +1,20 @@
 Pour Jeudi le 26 Sept. 2019
 
 Raphael
-Get LatLng from click on map
+Get LatLng from click on map (done)
 
 
 Niruban
-
+Afficher point LatLng des événements sur la carte
 
 
 Christophe
-
+Ajouter événement
+Page Liste evenements par jour
+Systeme alertes et notification
 
 
 Antoine
+Page accueil Calendrier
 
 
