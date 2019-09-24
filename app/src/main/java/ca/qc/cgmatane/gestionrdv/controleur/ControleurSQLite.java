@@ -5,13 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ControleurSQLite extends SQLiteOpenHelper {
-    private ControleurSQLite instance;
+    private static ControleurSQLite instance;
 
-    public ControleurSQLite getInstance(Context contexte){
+    public static ControleurSQLite getInstance(Context contexte){
         if(instance == null) instance = new ControleurSQLite(contexte);
         return instance;
     }
-
+    public static ControleurSQLite getInstance()
+    {
+        return instance;
+    }
     public ControleurSQLite(Context contexte){
         super(contexte, "GestionRDV", null, 1);
     }
@@ -19,7 +22,7 @@ public class ControleurSQLite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "create table evenement " +
-            "(id INTEGER PRIMARY KEY, nom TEXT, description TEXT, nom_endroit TEXT, latitude DOUBLE, longitude DOUBLE);";
+            "(id INTEGER PRIMARY KEY, nom TEXT, description TEXT, nom_endroit TEXT, moment TEXT, latitude DOUBLE, longitude DOUBLE);";
         db.execSQL(CREATE_TABLE);
     }
 
