@@ -3,7 +3,7 @@ package ca.qc.cgmatane.gestionrdv.vue;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import ca.qc.cgmatane.gestionrdv.R;
 
