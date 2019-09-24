@@ -5,16 +5,16 @@ Get LatLng from click on map (done)
 
 
 Niruban
-Afficher point LatLng des événements sur la carte
+Afficher point LatLng des evenements sur la carte
 Page Liste evenements par jour
 
 
 Christophe
-Ajouter événement (done 90%)
+Ajouter evenement (done 90%)
 Systeme alertes et notification
 
 
 Antoine
-Page accueil Calendrier
+Page accueil Calendrier 
 
 
