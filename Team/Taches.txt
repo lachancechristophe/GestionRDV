@@ -2,19 +2,20 @@ Pour Jeudi le 26 Sept. 2019
 
 Raphael
 Get LatLng from click on map (done)
-
+Developpement du DAO
 
 Niruban
 Afficher point LatLng des evenements sur la carte
-Page Liste evenements par jour
+
 
 
 Christophe
 Ajouter evenement (done 90%)
 Systeme alertes et notification
+Page Liste evenements par jour
 
 
 Antoine
-Page accueil Calendrier 
-
+Page accueil Calendrier (done)
+Page modifier evenement
 
