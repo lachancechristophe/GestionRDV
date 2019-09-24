@@ -109,8 +109,16 @@ public class EvenementDAO {
         return listeEvenement;
     }
 
-    public void ajouterEvenement(Evenement rdv){
-        //TODO: Insert into DB
+    public void ajouterEvenement(Evenement evenement){
+        Date moment = evenement.getMoment();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String date = dateFormat.format(moment);
+        Double latitude = evenement.getPointGPS().latitude;
+        Double longitude = evenement.getPointGPS().longitude;
+        String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES("
+                + evenement.getNom() + "','" + evenement.getDescription()
+                +"', '" +evenement.getNom_endroit()+"', '" + moment +"', '" + latitude +"', '" + longitude + "')";
+        accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
     }
 
     public void modifierEvenement(Evenement rdv){
