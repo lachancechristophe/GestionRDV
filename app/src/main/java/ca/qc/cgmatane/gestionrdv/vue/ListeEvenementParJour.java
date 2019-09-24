@@ -19,6 +19,6 @@ public class ListeEvenementParJour extends AppCompatActivity {
 
         TextView titre = (TextView) findViewById(R.id.textView);
 
-        titre.setText("Evenememts le "+dateChoisit);
+        titre.setText("Evenements le "+dateChoisit);
     }
 }
