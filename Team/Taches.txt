@@ -2,11 +2,12 @@ Pour Jeudi le 26 Sept. 2019
 
 Raphael
 Get LatLng from click on map (done)
+Afficher point LatLng des evenements sur la carte
 Developpement du DAO
 
-Niruban
-Afficher point LatLng des evenements sur la carte
 
+Niruban
+?
 
 
 Christophe
