@@ -5,13 +5,17 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.Date;
 
 public class Evenement {
+    private int id;
     private String nom;
     private String description;
     private String nom_endroit;
     private LatLng pointGPS;
     private Date moment;
 
-    public Evenement(String nom, String description, String nom_endroit, LatLng pointGPS, Date moment) {
+
+
+    public Evenement(int id, String nom, String description, String nom_endroit, LatLng pointGPS, Date moment) {
+        this.id = id;
         this.nom = nom;
         this.description = description;
         this.nom_endroit = nom_endroit;
@@ -20,6 +24,13 @@ public class Evenement {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getNom() {
         return nom;
     }

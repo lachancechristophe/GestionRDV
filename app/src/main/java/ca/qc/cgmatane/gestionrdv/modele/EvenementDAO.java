@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.gestionrdv.modele;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -36,7 +37,7 @@ public class EvenementDAO {
         this.listeEvenement.clear();
         Evenement evenement;
 
-
+        int indexId = curseur.getColumnIndex("id");
         int indexNom = curseur.getColumnIndex("nom");
         int indexDescription = curseur.getColumnIndex("description");
         int indexNomEndroit = curseur.getColumnIndex("nom_endroit");
@@ -47,6 +48,7 @@ public class EvenementDAO {
 
 
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
+            int id = curseur.getInt((indexId));
             String nom = curseur.getString(indexNom);
             String description = curseur.getString(indexDescription);
             String nomEndroit = curseur.getString(indexNomEndroit);
@@ -63,7 +65,7 @@ public class EvenementDAO {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            evenement = new Evenement(nom,description,nomEndroit,position,date);
+            evenement = new Evenement(id,nom,description,nomEndroit,position,date);
             this.listeEvenement.add(evenement);
 
 
@@ -76,14 +78,14 @@ public class EvenementDAO {
 
 
     public List<Evenement> getEvenementsParJour(Date moment){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
         String dateRecherche = dateFormat.format(moment);
         String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = " + dateRecherche;
         Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
         this.listeEvenement.clear();
         Evenement evenement;
 
-
+        int indexId = curseur.getColumnIndex("id");
         int indexNom = curseur.getColumnIndex("nom");
         int indexDescription = curseur.getColumnIndex("description");
         int indexNomEndroit = curseur.getColumnIndex("nom_endroit");
@@ -94,13 +96,55 @@ public class EvenementDAO {
 
 
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
+            int id = curseur.getInt(indexId);
             String nom = curseur.getString(indexNom);
             String description = curseur.getString(indexDescription);
             String nomEndroit = curseur.getString(indexNomEndroit);
             double latitude = curseur.getDouble(indexLatitute);
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
-            evenement = new Evenement(nom,description,nomEndroit,position,moment);
+            evenement = new Evenement(id,nom,description,nomEndroit,position,date);
+            this.listeEvenement.add(evenement);
+
+
+        }
+
+        return listeEvenement;
+    }
+
+    public List<Evenement> getEvenementsParJour(String dateRecherche){
+        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = " + dateRecherche;
+        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
+        this.listeEvenement.clear();
+        Evenement evenement;
+
+        int indexId = curseur.getColumnIndex("id");
+        int indexNom = curseur.getColumnIndex("nom");
+        int indexDescription = curseur.getColumnIndex("description");
+        int indexNomEndroit = curseur.getColumnIndex("nom_endroit");
+        int indexMoment = curseur.getColumnIndex("moment");
+        int indexLatitute = curseur.getColumnIndex("latitude");
+        int indexLongitude = curseur.getColumnIndex("longitude");
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+
+            date = formater.parse(dateRecherche);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
+            int id = curseur.getInt(indexId);
+            String nom = curseur.getString(indexNom);
+            String description = curseur.getString(indexDescription);
+            String nomEndroit = curseur.getString(indexNomEndroit);
+            double latitude = curseur.getDouble(indexLatitute);
+            double longitude = curseur.getDouble(indexLongitude);
+            LatLng position = new LatLng(latitude,longitude);
+            evenement = new Evenement(id,nom,description,nomEndroit,position,date);
             this.listeEvenement.add(evenement);
 
 
@@ -112,17 +156,30 @@ public class EvenementDAO {
     public void ajouterEvenement(Evenement evenement){
         Date moment = evenement.getMoment();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        String date = dateFormat.format(moment);
+        String dateInserer = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
         String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES("
                 + evenement.getNom() + "','" + evenement.getDescription()
-                +"', '" +evenement.getNom_endroit()+"', '" + moment +"', '" + latitude +"', '" + longitude + "')";
+                +"', '" +evenement.getNom_endroit()+"', '" + dateInserer +"', '" + latitude +"', '" + longitude + "')";
         accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
     }
 
-    public void modifierEvenement(Evenement rdv){
-        //TODO: Update -> DB
+    public void modifierEvenement(Evenement evenement){
+        Date moment = evenement.getMoment();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String dateModifier = dateFormat.format(moment);
+        Double latitude = evenement.getPointGPS().latitude;
+        Double longitude = evenement.getPointGPS().longitude;
+        ContentValues cv = new ContentValues();
+        cv.put("nom", evenement.getNom());
+        cv.put("description", evenement.getDescription());
+        cv.put("nom_endroit", evenement.getNom_endroit());
+        cv.put("moment", dateModifier);
+        cv.put("latitude", latitude);
+        cv.put("longitude", longitude);
+        accesseurBaseDeDonnees.getWritableDatabase().update("utilisateur", cv, "id=" + evenement.getId(), null  );
+
     }
 
     public void effacerEvenement(Evenement rdv){
