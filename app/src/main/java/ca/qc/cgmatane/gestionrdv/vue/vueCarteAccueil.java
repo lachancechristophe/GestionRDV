@@ -23,6 +23,7 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
 
     private GoogleMap mMap;
     private int compteurTemp;
+    private LatLng coordonnes;
 
     private Button vueCarteActionNaviguerListe;
     private Button vueCarteActionNaviguerAjouterEvenement;
@@ -97,7 +98,7 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-
+                coordonnes = latLng;
                 Toast.makeText(
                         vueCarteAccueil.this,
                         "Lat : " + latLng.latitude + " , "
@@ -112,7 +113,7 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
                 mMap.addMarker(new MarkerOptions()
                         .position(point)
                         .title("Évènement #" + compteurTemp)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                 compteurTemp++;
             }
 
