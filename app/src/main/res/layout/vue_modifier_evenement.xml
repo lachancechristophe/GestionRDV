@@ -85,11 +85,9 @@
         android:id="@+id/vue_modifier_evenement_action_modifier_emplacement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="140dp"
         android:text="Emplacement"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_date" />
 
@@ -123,5 +121,16 @@
         android:inputType="time"
         tools:layout_editor_absoluteX="109dp"
         tools:layout_editor_absoluteY="235dp" />
+
+    <EditText
+        android:id="@+id/vue_modifier_evenement_champ_nom_endroit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/vue_modifier_evenement_action_modifier_emplacement"
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_date" />
 
 </android.support.constraint.ConstraintLayout>
