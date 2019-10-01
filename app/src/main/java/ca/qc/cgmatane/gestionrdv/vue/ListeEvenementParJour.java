@@ -52,11 +52,11 @@ public class ListeEvenementParJour extends AppCompatActivity {
         intentionNaviguerAjouterEvenement = new Intent(this,AjouterEvenement.class);
 
 
-        Button vueCalendrierActionNaviguerListeEvenementParJour;
-        vueCalendrierActionNaviguerListeEvenementParJour =
+        Button vueCalendrierActionNaviguerAjouterEvenement;
+        vueCalendrierActionNaviguerAjouterEvenement =
             (Button) findViewById(R.id.vue_liste_evenements_par_jour_bouton_ajouter);
 
-        vueCalendrierActionNaviguerListeEvenementParJour.setOnClickListener(
+        vueCalendrierActionNaviguerAjouterEvenement.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
