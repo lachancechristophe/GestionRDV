@@ -2,6 +2,8 @@ package ca.qc.cgmatane.gestionrdv.vue;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -46,6 +48,22 @@ public class ListeEvenementParJour extends AppCompatActivity {
 
         vueListeEvenementsTexteDateChoisie = (TextView) findViewById(R.id.vue_liste_evenements_texte_heure_choisie);
         vueListeEvenementsListeEvenements = (ListView)findViewById(R.id.vue_liste_evenements_liste_affichage);
+
+        intentionNaviguerAjouterEvenement = new Intent(this,AjouterEvenement.class);
+
+
+        Button vueCalendrierActionNaviguerListeEvenementParJour;
+        vueCalendrierActionNaviguerListeEvenementParJour =
+            (Button) findViewById(R.id.vue_liste_evenements_par_jour_bouton_ajouter);
+
+        vueCalendrierActionNaviguerListeEvenementParJour.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivityForResult(intentionNaviguerAjouterEvenement,ListeEvenementParJour.ACTIVITE_AJOUTER_EVENEMENT);
+                }
+            }
+        );
 
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
         // TODO
