@@ -50,7 +50,7 @@ public class ModifierEvenement extends AppCompatActivity {
 
         this.accesseurEvenement =EvenementDAO.getInstance();
 
-        //evenement = accesseurEvenement.chercherEvenementParIdEvenement(idEvenement);
+        evenement = accesseurEvenement.chercherEvenementParIdEvenement(idEvenement);
 
 
         vueModifierEvenementChampNom = (EditText) findViewById(R.id.vue_modifier_evenement_champ_nom);
