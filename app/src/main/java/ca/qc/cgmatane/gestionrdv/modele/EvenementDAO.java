@@ -238,6 +238,14 @@ public class EvenementDAO {
         //TODO: Update -> DB
     }
 
+    public Evenement chercherEvenementParIdEvenement(int id_evenement){
+
+        for (Evenement evenementRecherche:this.listeEvenement) {
+            if(evenementRecherche.getId() == id_evenement) return evenementRecherche;
+        }
+        return null;
+    }
+
     public void effacerEvenement(Evenement rdv){
         //TODO: Remove from DB
     }

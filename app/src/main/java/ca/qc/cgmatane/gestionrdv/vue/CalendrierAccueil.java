@@ -42,7 +42,7 @@ public class CalendrierAccueil extends AppCompatActivity {
         vueCalendrierActionChoixJour.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                dateChoisit = ""+i2+"/"+i1+"/"+i;
+                dateChoisit = ""+i+"/"+i1+"/"+i2;
             }
         });
 
