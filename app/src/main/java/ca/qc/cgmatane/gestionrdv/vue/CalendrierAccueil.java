@@ -1,21 +1,24 @@
 package ca.qc.cgmatane.gestionrdv.vue;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ca.qc.cgmatane.gestionrdv.R;
+import ca.qc.cgmatane.gestionrdv.controleur.ControleurSQLite;
 
 public class CalendrierAccueil extends AppCompatActivity {
     static final public int ACTIVITE_LISTE_EVENEMENT_PAR_JOUR = 1;
-    static final public String DATE_FORMAT = "yyyy/MM/dd";
+    static final public String DATE_FORMAT = "dd/MM/yyyy";
 
 
     private String dateChoisit;
@@ -27,6 +30,8 @@ public class CalendrierAccueil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Toast toast = Toast.makeText(this, ControleurSQLite.getInstance().toString(), Toast.LENGTH_LONG);
+        //toast.show();
         setContentView(R.layout.vue_calendrier_accueil);
 
         vueCalendrierActionChoixJour =(CalendarView) findViewById(R.id.vue_calendrier_action_choix_jour);
@@ -37,7 +42,7 @@ public class CalendrierAccueil extends AppCompatActivity {
         vueCalendrierActionChoixJour.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                dateChoisit = ""+i+"/"+i1+"/"+i2;
+                dateChoisit = ""+i2+"/"+i1+"/"+i;
             }
         });
 

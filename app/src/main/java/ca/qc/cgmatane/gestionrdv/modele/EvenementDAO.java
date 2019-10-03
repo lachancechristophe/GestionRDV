@@ -1,7 +1,10 @@
 package ca.qc.cgmatane.gestionrdv.modele;
 
+import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -10,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import ca.qc.cgmatane.gestionrdv.controleur.*;
 
@@ -17,7 +21,7 @@ public class EvenementDAO {
     protected List<Evenement> listeEvenement;
     private ControleurSQLite accesseurBaseDeDonnees;
     private static EvenementDAO instance = null;
-    private Date date = null;
+    //private Date date = null;
     public static EvenementDAO getInstance(){
         if(instance == null) instance = new EvenementDAO();
         return instance;
@@ -25,8 +29,12 @@ public class EvenementDAO {
 
     public EvenementDAO(){
 
-        this.accesseurBaseDeDonnees = ControleurSQLite.getInstance();
+        accesseurBaseDeDonnees = ControleurSQLite.getInstance();
         listeEvenement = new ArrayList<Evenement>();
+    }
+
+    public void rafraichirBD(){
+        this.accesseurBaseDeDonnees = ControleurSQLite.getInstance();
     }
 
     public List<Evenement> getTousEvenements(){
@@ -48,7 +56,7 @@ public class EvenementDAO {
 
 
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
-            int id = curseur.getInt((indexId));
+            int id = curseur.getInt(indexId);
             String nom = curseur.getString(indexNom);
             String description = curseur.getString(indexDescription);
             String nomEndroit = curseur.getString(indexNomEndroit);
@@ -57,7 +65,7 @@ public class EvenementDAO {
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
             SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-
+            Date date = null;
             try {
 
                 date = formater.parse(moment);
@@ -76,12 +84,14 @@ public class EvenementDAO {
 
     }
 
+    public List<Evenement> getEvenementsParJour(String dateRecherche, Context context){
 
-    public List<Evenement> getEvenementsParJour(Date moment){
-        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
-        String dateRecherche = dateFormat.format(moment);
-        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = " + dateRecherche;
-        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
+        Toast toast = Toast.makeText(context, "'" +dateRecherche +"'", Toast.LENGTH_LONG);
+        toast.show();
+        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = '" + dateRecherche + "'";
+        //String LISTER_EVENEMENTS = "SELECT * FROM evenement";
+        Cursor curseur = ControleurSQLite.getInstance(context).getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
+
         this.listeEvenement.clear();
         Evenement evenement;
 
@@ -93,9 +103,20 @@ public class EvenementDAO {
         int indexLatitute = curseur.getColumnIndex("latitude");
         int indexLongitude = curseur.getColumnIndex("longitude");
 
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = null;
+        /*
+        try {
+
+            date = formater.parse(dateRecherche);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } */
 
 
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
+
             int id = curseur.getInt(indexId);
             String nom = curseur.getString(indexNom);
             String description = curseur.getString(indexDescription);
@@ -104,6 +125,7 @@ public class EvenementDAO {
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
             evenement = new Evenement(id,nom,description,nomEndroit,position,date);
+
             this.listeEvenement.add(evenement);
 
 
@@ -111,8 +133,10 @@ public class EvenementDAO {
 
         return listeEvenement;
     }
+    public List<Evenement> getEvenementsParJour(Date moment, Context context){
 
-    public List<Evenement> getEvenementsParJour(String dateRecherche){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String dateRecherche = dateFormat.format(moment);
         String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = " + dateRecherche;
         Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
         this.listeEvenement.clear();
@@ -144,7 +168,7 @@ public class EvenementDAO {
             double latitude = curseur.getDouble(indexLatitute);
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
-            evenement = new Evenement(id,nom,description,nomEndroit,position,date);
+            evenement = new Evenement(id,nom,description,nomEndroit,position,moment);
             this.listeEvenement.add(evenement);
 
 
@@ -155,8 +179,8 @@ public class EvenementDAO {
 
     public void ajouterEvenement(Evenement evenement){
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        String dateInserer = dateFormat.format(moment);
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        String date = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
         String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES("
@@ -180,6 +204,38 @@ public class EvenementDAO {
         cv.put("longitude", longitude);
         accesseurBaseDeDonnees.getWritableDatabase().update("utilisateur", cv, "id=" + evenement.getId(), null  );
 
+    public List<HashMap<String,String>> recupererListeEvenementPourAdapteur(){
+        List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
+        getTousEvenements();
+
+        for(Evenement evenement:listeEvenement){
+
+            listeEvenementPourAdapteur.add(evenement.obtenirEvenementPourAdapteur());
+
+
+        }
+        return listeEvenementPourAdapteur;
+    }
+
+    public List<HashMap<String,String>> recupererListeEvenementParJourPourAdapteur(String jour, Context context){
+
+
+
+
+        List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
+        getEvenementsParJour(jour, context);
+
+        for(Evenement evenement:listeEvenement){
+
+            listeEvenementPourAdapteur.add(evenement.obtenirEvenementPourAdapteur());
+
+
+        }
+        return listeEvenementPourAdapteur;
+    }
+
+    public void modifierEvenement(Evenement rdv){
+        //TODO: Update -> DB
     }
 
     public void effacerEvenement(Evenement rdv){

@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import ca.qc.cgmatane.gestionrdv.R;
+import ca.qc.cgmatane.gestionrdv.modele.Evenement;
 import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 
 public class ListeEvenementParJour extends AppCompatActivity {
@@ -20,7 +22,6 @@ public class ListeEvenementParJour extends AppCompatActivity {
     public static final int ACTIVITE_AJOUTER_EVENEMENT = 1;
     public static final int ACTIVITE_MODIFIER_EVENEMENT = 2;
 
-    public static EvenementDAO baseDeDonnee;
 
     protected ListView vueListeEvenementsListeEvenements;
     protected TextView vueListeEvenementsTexteDateChoisie;
@@ -29,7 +30,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
     protected Intent intentionNaviguerModifierEvenement;
     protected Intent intentionNaviguerAlerte;
 
-    protected EvenementDAO accesseurEvenement;
+
 
     /* TODO Gérer les alarmes
     protected AlarmManager gestionnaireAlertes;
@@ -39,6 +40,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //EvenementDAO.getInstance().rafraichirBD();
         setContentView(R.layout.vue_liste_evenement_par_jour);
 
         Bundle parametres = this.getIntent().getExtras();
@@ -49,20 +51,19 @@ public class ListeEvenementParJour extends AppCompatActivity {
 
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
         // TODO
-        //afficherEvenementsDuJour();
+        afficherEvenementsDuJour(dateChoisie);
     }
 
-    protected void afficherEvenementsDuJour(Date jourChoisi){
+    protected void afficherEvenementsDuJour(String jourChoisi){
 
         //TODO Get les events et les transformer en arraylist de hashmap string string
-        ArrayList<HashMap<String,String>> listeEvenements = new ArrayList<HashMap<String,String>>(); //accesseurEvenement.getTousEvenements();
+        List<HashMap<String,String>> listeEvenements = EvenementDAO.getInstance().recupererListeEvenementParJourPourAdapteur(jourChoisi, this); //accesseurEvenement.getTousEvenements();
 
         SimpleAdapter adapteurVueBibliothequeListeEvenementss = new SimpleAdapter(
                 this,
                 listeEvenements,
                 android.R.layout.two_line_list_item,
-                // http://stackoverflow.com/questions/3663745/what-is-android-r-layout-simple-list-item-1
-                new String[] {"TitreAuteur", "Lire avant"}, // l'indice utilisé dans les hashmap
+                new String[] {"nom", "description"}, // l'indice utilisé dans les hashmap
                 new int[] {android.R.id.text1, android.R.id.text2});
 
         vueListeEvenementsListeEvenements.setAdapter(adapteurVueBibliothequeListeEvenementss);

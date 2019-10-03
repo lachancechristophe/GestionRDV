@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ca.qc.cgmatane.gestionrdv.R;
+import ca.qc.cgmatane.gestionrdv.controleur.ControleurSQLite;
 
 public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallback {
 
@@ -27,7 +28,6 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
 
     private Button vueCarteActionNaviguerListe;
     private Button vueCarteActionNaviguerAjouterEvenement;
-
     private Intent intentionAjouterEvenement;
 
     @Override
