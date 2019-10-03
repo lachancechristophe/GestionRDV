@@ -20,7 +20,8 @@ import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 
 public class ModifierEvenement extends AppCompatActivity {
 
-    public static final String FORMAT_HEURE = "HH:mm";
+    public static final String HEURE_FORMAT = "HH:mm";
+    
 
     protected EvenementDAO accesseurEvenement;
     protected Evenement evenement;
@@ -65,12 +66,13 @@ public class ModifierEvenement extends AppCompatActivity {
         vueModifierEvenementChampDescription.setText(evenement.getDescription());
         vueModifierEvenementChampNomEndroit.setText(evenement.getNom_endroit());
         moment = evenement.getMoment();
-        SimpleDateFormat format_echance = new SimpleDateFormat(FORMAT_HEURE);
+        SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);
         echeance = format_echance.format(moment);
         vueModifierEvenementChampEchance.setText(echeance);
         long momentEnMilliseconds = moment.getTime();
         vueModifierEvenementChampDate.setDate(momentEnMilliseconds);
 
+        moment = evenement.getMoment();
 
         vueModifierEvenementChampDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -78,6 +80,8 @@ public class ModifierEvenement extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
 
+                String dateChoisie = ""+year+"/"+month+"/"+dayOfMonth;
+                moment = new Date(dateChoisie);
             }
         });
 
@@ -105,7 +109,7 @@ public class ModifierEvenement extends AppCompatActivity {
         evenement.setDescription(vueModifierEvenementChampDescription.getText().toString());
         evenement.setNom_endroit(vueModifierEvenementChampNomEndroit.getText().toString());
         //evenement.setPointGPS();
-        //evenement.setMoment();
+        evenement.setMoment(moment);
 
 
         accesseurEvenement.modifierEvenement(evenement);
