@@ -18,7 +18,7 @@ import ca.qc.cgmatane.gestionrdv.controleur.ControleurSQLite;
 
 public class CalendrierAccueil extends AppCompatActivity {
     static final public int ACTIVITE_LISTE_EVENEMENT_PAR_JOUR = 1;
-    static final public String DATE_FORMAT = "dd/MM/yyyy";
+    static final public String DATE_FORMAT = "d/M/yyyy";
 
 
     private String dateChoisit;
@@ -42,6 +42,7 @@ public class CalendrierAccueil extends AppCompatActivity {
         vueCalendrierActionChoixJour.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
+                i1++;
                 dateChoisit = ""+i2+"/"+i1+"/"+i;
             }
         });
