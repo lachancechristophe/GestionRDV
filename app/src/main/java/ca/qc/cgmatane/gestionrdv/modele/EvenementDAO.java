@@ -150,7 +150,7 @@ public class EvenementDAO {
         int indexLatitute = curseur.getColumnIndex("latitude");
         int indexLongitude = curseur.getColumnIndex("longitude");
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-
+        Date date;
         try {
 
             date = formater.parse(dateRecherche);
@@ -185,7 +185,7 @@ public class EvenementDAO {
         Double longitude = evenement.getPointGPS().longitude;
         String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES("
                 + evenement.getNom() + "','" + evenement.getDescription()
-                +"', '" +evenement.getNom_endroit()+"', '" + dateInserer +"', '" + latitude +"', '" + longitude + "')";
+                +"', '" +evenement.getNom_endroit()+"', '" + date +"', '" + latitude +"', '" + longitude + "')";
         accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
     }
 
@@ -203,7 +203,7 @@ public class EvenementDAO {
         cv.put("latitude", latitude);
         cv.put("longitude", longitude);
         accesseurBaseDeDonnees.getWritableDatabase().update("utilisateur", cv, "id=" + evenement.getId(), null  );
-
+    }
     public List<HashMap<String,String>> recupererListeEvenementPourAdapteur(){
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
         getTousEvenements();
@@ -234,9 +234,7 @@ public class EvenementDAO {
         return listeEvenementPourAdapteur;
     }
 
-    public void modifierEvenement(Evenement rdv){
-        //TODO: Update -> DB
-    }
+
 
     public Evenement chercherEvenementParIdEvenement(int id_evenement){
 
