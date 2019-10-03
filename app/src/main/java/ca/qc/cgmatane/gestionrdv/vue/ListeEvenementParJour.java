@@ -10,13 +10,10 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import ca.qc.cgmatane.gestionrdv.R;
-import ca.qc.cgmatane.gestionrdv.modele.Evenement;
 import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 
 public class ListeEvenementParJour extends AppCompatActivity {
@@ -51,7 +48,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
         vueListeEvenementsTexteDateChoisie = (TextView) findViewById(R.id.vue_liste_evenements_texte_heure_choisie);
         vueListeEvenementsListeEvenements = (ListView)findViewById(R.id.vue_liste_evenements_liste_affichage);
 
-        intentionNaviguerAjouterEvenement = new Intent(this,AjouterEvenement.class);
+        intentionNaviguerAjouterEvenement = new Intent(this, CarteAjouter.class);
 
 
         Button vueCalendrierActionNaviguerAjouterEvenement;

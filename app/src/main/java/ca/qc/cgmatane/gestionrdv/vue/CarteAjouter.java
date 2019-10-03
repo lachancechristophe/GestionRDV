@@ -13,19 +13,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ca.qc.cgmatane.gestionrdv.R;
-import ca.qc.cgmatane.gestionrdv.controleur.ControleurSQLite;
 
-public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallback {
+public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback {
 
     public static final int ACTIVITE_AJOUTER_EVENEMENT = 1;
 
     private GoogleMap mMap;
     private int compteurTemp;
     private LatLng coordonnes;
-
+    private Marker markeur;
     private Button vueCarteActionNaviguerListe;
     private Button vueCarteActionNaviguerAjouterEvenement;
     private Intent intentionAjouterEvenement;
@@ -100,7 +100,7 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
             public void onMapClick(LatLng latLng) {
                 coordonnes = latLng;
                 Toast.makeText(
-                        vueCarteAccueil.this,
+                        CarteAjouter.this,
                         "Lat : " + latLng.latitude + " , "
                                 + "Long : " + latLng.longitude,
                         Toast.LENGTH_LONG).show();
@@ -110,9 +110,10 @@ public class vueCarteAccueil extends FragmentActivity implements OnMapReadyCallb
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener(){
             @Override
             public void onMapLongClick(LatLng point) {
-                mMap.addMarker(new MarkerOptions()
+                if (markeur != null){markeur.remove();}
+                markeur = mMap.addMarker(new MarkerOptions()
                         .position(point)
-                        .title("Évènement #" + compteurTemp)
+                        .title("Position de l'évènement")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                 compteurTemp++;
             }

@@ -39,7 +39,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".vue.vueCarteAccueil"
+            android:name=".vue.CarteAjouter"
             android:label="@string/title_activity_maps">
         </activity>
     </application>

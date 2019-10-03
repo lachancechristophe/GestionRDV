@@ -2,6 +2,7 @@ package ca.qc.cgmatane.gestionrdv.vue;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,9 @@ public class AjouterEvenement extends AppCompatActivity {
     protected CalendarView vueAjouterEvenementChampDate;
     protected LatLng pointGPS;
     protected Date echeance;
+    protected Intent intentionRetourVueListe;
+
+    public static final int ACTIVITE_LISTE_EVENEMENT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,14 @@ public class AjouterEvenement extends AppCompatActivity {
         vueAjouterEvenementActionRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                naviguerRetourCarte();
+            }
+        });
+
+        Button vueAjouterEvenementActionAnnulation = (Button)findViewById(R.id.vue_ajouter_evenement_action_annulation);
+        vueAjouterEvenementActionAnnulation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 naviguerRetourListeEvenements();
             }
         });
@@ -64,6 +76,7 @@ public class AjouterEvenement extends AppCompatActivity {
                 showDialog(2);
             }
         });
+        intentionRetourVueListe = new Intent(this, AjouterEvenement.class);
     }
 
     @Override
@@ -103,8 +116,12 @@ public class AjouterEvenement extends AppCompatActivity {
         naviguerRetourListeEvenements();
     }
 
-    private void  naviguerRetourListeEvenements(){
+    private void  naviguerRetourCarte(){
         this.finish();
+    }
+    private void  naviguerRetourListeEvenements(){
+
+        startActivityForResult(intentionRetourVueListe, ACTIVITE_LISTE_EVENEMENT);
     }
 
 }
