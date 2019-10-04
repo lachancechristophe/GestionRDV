@@ -3,6 +3,7 @@ package ca.qc.cgmatane.gestionrdv.vue;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -60,6 +61,31 @@ public class ListeEvenementParJour extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     startActivityForResult(intentionNaviguerAjouterEvenement,ListeEvenementParJour.ACTIVITE_AJOUTER_EVENEMENT);
+                }
+            }
+        );
+
+        vueListeEvenementsListeEvenements.setOnItemClickListener(
+            new AdapterView.OnItemClickListener(){
+                public void onItemClick(
+                    AdapterView<?> parent,
+                    View vue,
+                    int positionDansAdapteur,
+                    long positionItem)
+                {
+
+                    ListView vueListeEvenementsListeEvenementsOnClick = (ListView)vue.getParent();
+
+                    @SuppressWarnings("unchecked")
+                    HashMap<String, String> evenement =
+                        (HashMap<String, String>)vueListeEvenementsListeEvenementsOnClick.getItemAtPosition((int)positionItem);
+
+
+
+                    intentionNaviguerModifierEvenement =
+                        new Intent(ListeEvenementParJour.this, ModifierEvenement.class);
+                    intentionNaviguerModifierEvenement.putExtra("id_evenement", evenement.get("id"));
+                    startActivityForResult(intentionNaviguerModifierEvenement,ListeEvenementParJour.ACTIVITE_MODIFIER_EVENEMENT);
                 }
             }
         );

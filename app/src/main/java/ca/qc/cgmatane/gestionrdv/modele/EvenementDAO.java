@@ -78,7 +78,7 @@ public class EvenementDAO {
 
 
         }
-        
+
         return listeEvenement;
 
 
@@ -104,7 +104,7 @@ public class EvenementDAO {
         int indexLongitude = curseur.getColumnIndex("longitude");
 
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = null;
+        /*Date date = null;
         /*
         try {
 
@@ -121,6 +121,8 @@ public class EvenementDAO {
             String nom = curseur.getString(indexNom);
             String description = curseur.getString(indexDescription);
             String nomEndroit = curseur.getString(indexNomEndroit);
+            String moment = curseur.getString(indexMoment);
+            Date date = new Date(moment);
             double latitude = curseur.getDouble(indexLatitute);
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
@@ -184,8 +186,8 @@ public class EvenementDAO {
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
         String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES("
-                + evenement.getNom() + "','" + evenement.getDescription()
-                +"', '" +evenement.getNom_endroit()+"', '" + date +"', '" + latitude +"', '" + longitude + "')";
+            + evenement.getNom() + "','" + evenement.getDescription()
+            +"', '" +evenement.getNom_endroit()+"', '" + date +"', '" + latitude +"', '" + longitude + "')";
         accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
     }
 

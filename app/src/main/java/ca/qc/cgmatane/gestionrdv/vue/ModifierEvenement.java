@@ -21,7 +21,7 @@ import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 public class ModifierEvenement extends AppCompatActivity {
 
     public static final String HEURE_FORMAT = "HH:mm";
-    
+
 
     protected EvenementDAO accesseurEvenement;
     protected Evenement evenement;
@@ -55,7 +55,7 @@ public class ModifierEvenement extends AppCompatActivity {
 
 
         vueModifierEvenementChampNom = (EditText) findViewById(R.id.vue_modifier_evenement_champ_nom);
-        vueModifierEvenementChampDescription = (EditText) findViewById(R.id.vue_modifier_evenement_champ_date);
+        vueModifierEvenementChampDescription = (EditText) findViewById(R.id.vue_modifier_evenement_champ_description);
         vueModifierEvenementChampNomEndroit = (EditText) findViewById(R.id.vue_modifier_evenement_champ_nom_endroit);
         vueModifierEvenementChampEchance = (EditText) findViewById(R.id.vue_modifier_evenement_champ_echeance);
         vueModifierEvenementChampDate = (CalendarView) findViewById(R.id.vue_modifier_evenement_champ_date);
@@ -66,13 +66,14 @@ public class ModifierEvenement extends AppCompatActivity {
         vueModifierEvenementChampDescription.setText(evenement.getDescription());
         vueModifierEvenementChampNomEndroit.setText(evenement.getNom_endroit());
         moment = evenement.getMoment();
+        System.out.println(moment);
+        long momentEnMilliseconds = moment.getTime();
+        vueModifierEvenementChampDate.setDate(momentEnMilliseconds);
         SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);
         echeance = format_echance.format(moment);
         vueModifierEvenementChampEchance.setText(echeance);
-        long momentEnMilliseconds = moment.getTime();
-        vueModifierEvenementChampDate.setDate(momentEnMilliseconds);
 
-        moment = evenement.getMoment();
+
 
         vueModifierEvenementChampDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
