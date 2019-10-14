@@ -22,6 +22,7 @@ import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 public class ModifierEvenement extends AppCompatActivity {
 
     public static final String HEURE_FORMAT = "HH:mm";
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
 
 
     protected EvenementDAO accesseurEvenement;
@@ -36,7 +37,8 @@ public class ModifierEvenement extends AppCompatActivity {
     protected String echeance;
     protected Date moment;
 
-    private String momentChoisi;
+    private String echanceChoisi;
+    private String dateChoisie;
 
     //TODO : recuperer l'evenement
     //              +
@@ -62,17 +64,16 @@ public class ModifierEvenement extends AppCompatActivity {
         vueModifierEvenementChampDate = (CalendarView) findViewById(R.id.vue_modifier_evenement_champ_date);
 
 
-        //Recuperation des valeurs de l'evenement a modifiier et affichage dans les champs
+        //Recuperation des valeurs de l'evenement a modifier et affichage dans les champs
         vueModifierEvenementChampNom.setText(evenement.getNom());
         vueModifierEvenementChampDescription.setText(evenement.getDescription());
         vueModifierEvenementChampNomEndroit.setText(evenement.getNom_endroit());
         moment = evenement.getMoment();
-
-        Toast toast = Toast.makeText(this, String.valueOf(moment), Toast.LENGTH_LONG);
-        toast.show();
-
+        SimpleDateFormat format_date = new SimpleDateFormat(DATE_FORMAT);
+        dateChoisie = format_date.format(moment);
         long momentEnMilliseconds = moment.getTime();
         vueModifierEvenementChampDate.setDate(momentEnMilliseconds);
+
         SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);
         echeance = format_echance.format(moment);
         vueModifierEvenementChampEchance.setText(echeance);
@@ -85,8 +86,8 @@ public class ModifierEvenement extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
 
-                String dateChoisie = ""+year+"/"+month+"/"+dayOfMonth;
-                moment = new Date(dateChoisie);
+                dateChoisie = ""+dayOfMonth+"/"+month+"/"+year;
+
             }
         });
 
@@ -102,6 +103,18 @@ public class ModifierEvenement extends AppCompatActivity {
             }
         );
 
+        Button vueModifierEvenementActionRetour =
+            (Button) findViewById(R.id.vue_modifier_evenement_action_retour);
+
+        vueModifierEvenementActionRetour.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    naviguerRetourListeEvenementParJour();
+                }
+            }
+        );
+
 
     }
     //TODO : recuperer les coordonnées dans pointGPS
@@ -113,11 +126,14 @@ public class ModifierEvenement extends AppCompatActivity {
         evenement.setNom(vueModifierEvenementChampNom.getText().toString());
         evenement.setDescription(vueModifierEvenementChampDescription.getText().toString());
         evenement.setNom_endroit(vueModifierEvenementChampNomEndroit.getText().toString());
-        //evenement.setPointGPS();
+        evenement.setPointGPS(pointGPS);
+        evenement.setPointGPS(pointGPS);
+        echanceChoisi = vueModifierEvenementChampEchance.getText().toString();
+        moment = new Date(dateChoisie+" "+echanceChoisi);
         evenement.setMoment(moment);
 
 
-        accesseurEvenement.modifierEvenement(evenement);
+        accesseurEvenement.modifierEvenement(evenement,this);
 
         naviguerRetourListeEvenementParJour();
     }

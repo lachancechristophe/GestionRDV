@@ -32,9 +32,9 @@ public class ControleurSQLite extends SQLiteOpenHelper {
         String DELETE = "delete from evenement where 1 = 1";
         db.execSQL(DELETE);
 
-        String INSERT_1 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Reunion', 'Reunion pour projet X', 'Cegep Matane', '3/10/2019', 48.840677, -67.497457)";
-        String INSERT_2 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Rendez-Vous', 'Rendez-Vous pour abandonner le Cegep', 'Cegep Matane', '24/11/2019', 48.840677, -67.497457)";
-        String INSERT_3 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Competition', 'Tournoi national du lancer de patate', 'Cegep Matane', '4/4/2020', 48.840677, -67.497457)";
+        String INSERT_1 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Reunion', 'Reunion pour projet X', 'Cegep Matane', '3/10/2019 12:40', 48.840677, -67.497457)";
+        String INSERT_2 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Rendez-Vous', 'Rendez-Vous pour abandonner le Cegep', 'Cegep Matane', '24/11/2019 12:00', 48.840677, -67.497457)";
+        String INSERT_3 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Competition', 'Tournoi national du lancer de patate', 'Cegep Matane', '4/4/2020 12:00', 48.840677, -67.497457)";
 
         db.execSQL(INSERT_1);
         db.execSQL(INSERT_2);

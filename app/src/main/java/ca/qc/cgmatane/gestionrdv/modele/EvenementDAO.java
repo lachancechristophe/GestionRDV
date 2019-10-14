@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -12,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -86,9 +88,8 @@ public class EvenementDAO {
 
     public List<Evenement> getEvenementsParJour(String dateRecherche, Context context){
 
-        Toast toast = Toast.makeText(context, "'" +dateRecherche +"'", Toast.LENGTH_LONG);
-        toast.show();
-        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = '" + dateRecherche + "'";
+        String lendemain = recupererlendemain(dateRecherche);
+        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
         //String LISTER_EVENEMENTS = "SELECT * FROM evenement";
         Cursor curseur = ControleurSQLite.getInstance(context).getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
 
@@ -102,18 +103,6 @@ public class EvenementDAO {
         int indexMoment = curseur.getColumnIndex("moment");
         int indexLatitute = curseur.getColumnIndex("latitude");
         int indexLongitude = curseur.getColumnIndex("longitude");
-
-        /*SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = null;
-
-        try {
-
-            date = formater.parse(dateRecherche);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } */
-
 
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
 
@@ -136,49 +125,6 @@ public class EvenementDAO {
 
         return listeEvenement;
     }
-    public List<Evenement> getEvenementsParJour(Date moment, Context context){
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String dateRecherche = dateFormat.format(moment);
-        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment = " + dateRecherche;
-        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
-        this.listeEvenement.clear();
-        Evenement evenement;
-
-        int indexId = curseur.getColumnIndex("id");
-        int indexNom = curseur.getColumnIndex("nom");
-        int indexDescription = curseur.getColumnIndex("description");
-        int indexNomEndroit = curseur.getColumnIndex("nom_endroit");
-        int indexMoment = curseur.getColumnIndex("moment");
-        int indexLatitute = curseur.getColumnIndex("latitude");
-        int indexLongitude = curseur.getColumnIndex("longitude");
-        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-        Date date;
-        try {
-
-            date = formater.parse(dateRecherche);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-        for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
-            int id = curseur.getInt(indexId);
-            String nom = curseur.getString(indexNom);
-            String description = curseur.getString(indexDescription);
-            String nomEndroit = curseur.getString(indexNomEndroit);
-            double latitude = curseur.getDouble(indexLatitute);
-            double longitude = curseur.getDouble(indexLongitude);
-            LatLng position = new LatLng(latitude,longitude);
-            evenement = new Evenement(id,nom,description,nomEndroit,position,moment);
-            this.listeEvenement.add(evenement);
-
-
-        }
-
-        return listeEvenement;
-    }
 
     public void ajouterEvenement(Evenement evenement){
         Date moment = evenement.getMoment();
@@ -192,12 +138,13 @@ public class EvenementDAO {
         accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
     }
 
-    public void modifierEvenement(Evenement evenement){
+    public void modifierEvenement(Evenement evenement, Context context){
+
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
         String dateModifier = dateFormat.format(moment);
-        Double latitude = evenement.getPointGPS().latitude;
-        Double longitude = evenement.getPointGPS().longitude;
+        Double latitude = 10.;
+        Double longitude = 10.;
         ContentValues cv = new ContentValues();
         cv.put("nom", evenement.getNom());
         cv.put("description", evenement.getDescription());
@@ -205,7 +152,7 @@ public class EvenementDAO {
         cv.put("moment", dateModifier);
         cv.put("latitude", latitude);
         cv.put("longitude", longitude);
-        accesseurBaseDeDonnees.getWritableDatabase().update("utilisateur", cv, "id=" + evenement.getId(), null  );
+        accesseurBaseDeDonnees.getInstance(context).getWritableDatabase().update("evenement", cv, "id=" + evenement.getId(), null  );
     }
     public List<HashMap<String,String>> recupererListeEvenementPourAdapteur(){
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
@@ -251,12 +198,11 @@ public class EvenementDAO {
         //TODO: Remove from DB
     }
 
-    public String recupererDatePourCalendarView(String moment){
+    private String recupererDatePourCalendarView(String moment){
 
-        final String FORMAT_FR = "dd/MM/yyyy";
-        final String FORMAT_US = "yyyy/MM/dd";
+        final String FORMAT_FR = "dd/MM/yyyy hh:mm";
+        final String FORMAT_US = "yyyy/MM/dd hh:mm";
 
-        // August 12, 2010
         String ancienneDateString = moment;
         String nouvelleDateString;
 
@@ -271,6 +217,31 @@ public class EvenementDAO {
         nouvelleDateString = formatNouvelleDate.format(date);
 
         return nouvelleDateString;
+    }
+
+    private String recupererlendemain(String date){
+        String FORMAT= "d/MM/yyyy";
+
+        SimpleDateFormat formatDate = new SimpleDateFormat(FORMAT);
+        Date date1 = null;
+        try {
+            date1 = formatDate.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        Date lendemain;
+        Calendar c = Calendar.getInstance();
+        c.setTime(date1);
+
+
+        c.add(Calendar.DATE, 1);
+        lendemain = c.getTime();
+
+
+        String strDate = formatDate.format(lendemain);
+
+        return strDate;
     }
 
 
