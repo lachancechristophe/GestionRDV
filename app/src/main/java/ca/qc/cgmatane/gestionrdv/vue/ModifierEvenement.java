@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.maps.model.LatLng;
@@ -66,7 +67,10 @@ public class ModifierEvenement extends AppCompatActivity {
         vueModifierEvenementChampDescription.setText(evenement.getDescription());
         vueModifierEvenementChampNomEndroit.setText(evenement.getNom_endroit());
         moment = evenement.getMoment();
-        System.out.println(moment);
+
+        Toast toast = Toast.makeText(this, String.valueOf(moment), Toast.LENGTH_LONG);
+        toast.show();
+
         long momentEnMilliseconds = moment.getTime();
         vueModifierEvenementChampDate.setDate(momentEnMilliseconds);
         SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);

@@ -103,9 +103,9 @@ public class EvenementDAO {
         int indexLatitute = curseur.getColumnIndex("latitude");
         int indexLongitude = curseur.getColumnIndex("longitude");
 
-        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-        /*Date date = null;
-        /*
+        /*SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = null;
+
         try {
 
             date = formater.parse(dateRecherche);
@@ -122,6 +122,7 @@ public class EvenementDAO {
             String description = curseur.getString(indexDescription);
             String nomEndroit = curseur.getString(indexNomEndroit);
             String moment = curseur.getString(indexMoment);
+            moment = recupererDatePourCalendarView(moment);
             Date date = new Date(moment);
             double latitude = curseur.getDouble(indexLatitute);
             double longitude = curseur.getDouble(indexLongitude);
@@ -248,6 +249,28 @@ public class EvenementDAO {
 
     public void effacerEvenement(Evenement rdv){
         //TODO: Remove from DB
+    }
+
+    public String recupererDatePourCalendarView(String moment){
+
+        final String FORMAT_FR = "dd/MM/yyyy";
+        final String FORMAT_US = "yyyy/MM/dd";
+
+        // August 12, 2010
+        String ancienneDateString = moment;
+        String nouvelleDateString;
+
+        SimpleDateFormat formatNouvelleDate = new SimpleDateFormat(FORMAT_FR);
+        Date date = null;
+        try {
+            date = formatNouvelleDate.parse(ancienneDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        formatNouvelleDate.applyPattern(FORMAT_US);
+        nouvelleDateString = formatNouvelleDate.format(date);
+
+        return nouvelleDateString;
     }
 
 
