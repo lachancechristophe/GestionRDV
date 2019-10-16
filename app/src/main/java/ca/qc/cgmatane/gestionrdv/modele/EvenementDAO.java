@@ -37,8 +37,8 @@ public class EvenementDAO {
         listeEvenement = new ArrayList<Evenement>();
     }
 
-    public void rafraichirBD(){
-        this.accesseurBaseDeDonnees = ControleurSQLite.getInstance();
+    public void rafraichirBD(Context context){
+        this.accesseurBaseDeDonnees = ControleurSQLite.getInstance(context);
     }
 
     public Integer getNbEvenements(){
@@ -97,6 +97,7 @@ public class EvenementDAO {
 
     public List<Evenement> getEvenementsParJour(String dateRecherche, Context context){
 
+        rafraichirBD(context);
         String lendemain = recupererlendemain(dateRecherche);
         String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment LIKE '" + dateRecherche + "%' OR moment LIKE '" + lendemain + "%'";
         //String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
