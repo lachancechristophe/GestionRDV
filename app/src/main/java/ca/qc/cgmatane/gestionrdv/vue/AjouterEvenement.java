@@ -128,10 +128,10 @@ public class AjouterEvenement extends AppCompatActivity {
         System.out.println(echeance);
 
         EvenementDAO accesseurEvenements = EvenementDAO.getInstance();
-
+        int nbEvents = eDAO.getNbEvenements() + 1;
         Evenement event = new Evenement(
                 //EvenementDAO.getInstance().getTousEvenements().size() + 1,
-                eDAO.getNbEvenements() + 1,
+                nbEvents,
                 vueAjouterEvenementChampNom.getText().toString(),
                 vueAjouterEvenementChampDescription.getText().toString(),
                 vueAjouterEvenementChampNomEndroit.getText().toString(),
