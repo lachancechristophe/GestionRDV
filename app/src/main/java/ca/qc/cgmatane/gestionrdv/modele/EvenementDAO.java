@@ -143,8 +143,8 @@ public class EvenementDAO {
         Date moment = evenement.getMoment();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
         String dateModifier = dateFormat.format(moment);
-        Double latitude = 10.;
-        Double longitude = 10.;
+        Double latitude = evenement.getPointGPS().latitude;
+        Double longitude = evenement.getPointGPS().longitude;
         ContentValues cv = new ContentValues();
         cv.put("nom", evenement.getNom());
         cv.put("description", evenement.getDescription());

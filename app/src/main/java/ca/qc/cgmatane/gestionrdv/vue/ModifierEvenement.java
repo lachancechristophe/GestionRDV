@@ -64,6 +64,7 @@ public class ModifierEvenement extends AppCompatActivity {
         vueModifierEvenementChampDate = (CalendarView) findViewById(R.id.vue_modifier_evenement_champ_date);
 
 
+
         //Recuperation des valeurs de l'evenement a modifier et affichage dans les champs
         vueModifierEvenementChampNom.setText(evenement.getNom());
         vueModifierEvenementChampDescription.setText(evenement.getDescription());
@@ -77,6 +78,8 @@ public class ModifierEvenement extends AppCompatActivity {
         SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);
         echeance = format_echance.format(moment);
         vueModifierEvenementChampEchance.setText(echeance);
+
+        pointGPS = evenement.getPointGPS();
 
 
 
@@ -126,7 +129,6 @@ public class ModifierEvenement extends AppCompatActivity {
         evenement.setNom(vueModifierEvenementChampNom.getText().toString());
         evenement.setDescription(vueModifierEvenementChampDescription.getText().toString());
         evenement.setNom_endroit(vueModifierEvenementChampNomEndroit.getText().toString());
-        evenement.setPointGPS(pointGPS);
         evenement.setPointGPS(pointGPS);
         echanceChoisi = vueModifierEvenementChampEchance.getText().toString();
         moment = new Date(dateChoisie+" "+echanceChoisi);
