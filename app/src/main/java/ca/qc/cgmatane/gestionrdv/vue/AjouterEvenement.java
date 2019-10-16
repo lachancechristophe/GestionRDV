@@ -26,6 +26,7 @@ public class AjouterEvenement extends AppCompatActivity {
     protected EditText vueAjouterEvenementChampDescription;
     protected EditText vueAjouterEvenementChampNomEndroit;
     protected TextView vueAjouterEvenementTexteHeure;
+    protected TextView vueAjouterEvenementTextePosition;
     protected CalendarView vueAjouterEvenementChampDate;
     protected LatLng pointGPS;
     protected Date echeance;
@@ -38,7 +39,7 @@ public class AjouterEvenement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_evenement);
         //TODO: Passer le point GPS en extra
-
+        pointGPS = getIntent().getExtras().getParcelable("Position");
 
         echeance = new Date();
         echeance.setHours(12);
@@ -77,6 +78,10 @@ public class AjouterEvenement extends AppCompatActivity {
             }
         });
         intentionRetourVueListe = new Intent(this, AjouterEvenement.class);
+
+        vueAjouterEvenementTexteHeure = (TextView) findViewById(R.id.vue_ajouter_evenement_texte_heure);
+        vueAjouterEvenementTextePosition = (TextView) findViewById(R.id.vue_ajouter_evenement_texte_position);
+        vueAjouterEvenementTextePosition.setText("Position: " + pointGPS.toString());
     }
 
     @Override

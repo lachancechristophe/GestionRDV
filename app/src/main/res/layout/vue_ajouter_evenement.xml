@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_evenement_champ_description" />
 
     <TextView
-        android:id="@+id/vue_ajouter_evenement_texte_heure_lire_avant"
+        android:id="@+id/vue_ajouter_evenement_texte_heure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -108,7 +108,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="Changer l'heure"
-        app:layout_constraintStart_toEndOf="@+id/vue_ajouter_evenement_texte_heure_lire_avant"
+        app:layout_constraintStart_toEndOf="@+id/vue_ajouter_evenement_texte_heure"
         app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_evenement_champ_description" />
 
     <Button
@@ -120,4 +120,13 @@
         android:text="Annuler Ajout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/vue_ajouter_evenement_texte_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Position: "
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_evenement_action_choisir_heure"
+        tools:layout_editor_absoluteX="48dp" />
 </android.support.constraint.ConstraintLayout>

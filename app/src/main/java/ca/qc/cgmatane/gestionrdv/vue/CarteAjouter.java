@@ -58,6 +58,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
         intentionAjouterEvenement = new Intent(this, AjouterEvenement.class);
     }
 
@@ -71,7 +72,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void naviguerAjouterEvenements(){
-
+        intentionAjouterEvenement.putExtra("Position", markeur.getPosition());
         startActivityForResult(intentionAjouterEvenement, ACTIVITE_AJOUTER_EVENEMENT);
     }
 
