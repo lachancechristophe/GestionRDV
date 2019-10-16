@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -14,6 +15,7 @@ import android.widget.TimePicker;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ca.qc.cgmatane.gestionrdv.R;
@@ -44,10 +46,17 @@ public class AjouterEvenement extends AppCompatActivity {
 
         date = getIntent().getExtras().getString("date");
 
-        echeance = new Date();
+        try{
+            echeance = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        }
+        catch(Exception e){
+            Log.d("Error", e.getMessage());
+            echeance = new Date(date);
+        }
         echeance.setHours(12);
         echeance.setMinutes(0);
 
+        Log.i("date", echeance.toString());
         Button vueAjouterEvenementActionValider = (Button)findViewById(R.id.vue_ajouter_evenement_action_valider);
         vueAjouterEvenementActionValider.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +122,7 @@ public class AjouterEvenement extends AppCompatActivity {
     };
 
     private void enregistrerEvenement(){
-        
+
         System.out.println(echeance);
 
         EvenementDAO accesseurEvenements = EvenementDAO.getInstance();

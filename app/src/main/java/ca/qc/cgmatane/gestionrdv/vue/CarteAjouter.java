@@ -3,6 +3,7 @@ package ca.qc.cgmatane.gestionrdv.vue;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private int compteurTemp;
     private LatLng coordonnes;
+    private String dateChoisie;
     private Marker markeur;
     private Button vueCarteActionNaviguerListe;
     private Button vueCarteActionNaviguerAjouterEvenement;
@@ -33,7 +35,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        dateChoisie = getIntent().getExtras().getString("date");
         compteurTemp = 1;
         setContentView(R.layout.vue_carte_accueil);
 
@@ -72,7 +74,20 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void naviguerAjouterEvenements(){
+        if(markeur == null) {
+            Toast.makeText(
+                    CarteAjouter.this,
+                    "SVP désigner un endroit.",
+                    Toast.LENGTH_LONG).show();
+            try {
+                wait(1000);
+            } catch (Exception e) {
+                Log.d("Error", e.getMessage());
+            }
+            return;
+        }
         intentionAjouterEvenement.putExtra("Position", markeur.getPosition());
+        intentionAjouterEvenement.putExtra("date", dateChoisie);
         startActivityForResult(intentionAjouterEvenement, ACTIVITE_AJOUTER_EVENEMENT);
     }
 
