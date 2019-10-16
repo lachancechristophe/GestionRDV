@@ -131,7 +131,7 @@ public class AjouterEvenement extends AppCompatActivity {
 
         Evenement event = new Evenement(
                 //EvenementDAO.getInstance().getTousEvenements().size() + 1,
-                EvenementDAO.getInstance().getNbEvenements() + 1,
+                eDAO.getNbEvenements() + 1,
                 vueAjouterEvenementChampNom.getText().toString(),
                 vueAjouterEvenementChampDescription.getText().toString(),
                 vueAjouterEvenementChampNomEndroit.getText().toString(),

@@ -44,10 +44,10 @@ public class EvenementDAO {
     public Integer getNbEvenements(){
         String COMPTER_EVENEMENTS = "SELECT COUNT() FROM evenement";
 
-
+        accesseurBaseDeDonnees = ControleurSQLite.getInstance();
         Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(COMPTER_EVENEMENTS, null);
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
-            return curseur.getInt(1);
+            return curseur.getInt(0);
         }
 
         return 0;
@@ -146,7 +146,7 @@ public class EvenementDAO {
         String date = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
-        String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES("
+        String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('"
             + evenement.getNom() + "','" + evenement.getDescription()
             +"', '" +evenement.getNom_endroit()+"', '" + date +"', '" + latitude +"', '" + longitude + "')";
         accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
