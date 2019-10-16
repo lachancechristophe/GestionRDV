@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.gestionrdv.vue;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class ModifierEvenement extends AppCompatActivity {
 
     public static final String HEURE_FORMAT = "HH:mm";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final int ACTIVITE_MODIFIER_EMPLACEMENT = 1;
 
 
     protected EvenementDAO accesseurEvenement;
@@ -36,6 +38,8 @@ public class ModifierEvenement extends AppCompatActivity {
     protected LatLng pointGPS;
     protected String echeance;
     protected Date moment;
+
+    protected Intent intentionNaviguerModifierEmplacement;
 
     private String echanceChoisi;
     private String dateChoisie;
@@ -114,6 +118,24 @@ public class ModifierEvenement extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     naviguerRetourListeEvenementParJour();
+                }
+            }
+        );
+
+        intentionNaviguerModifierEmplacement = new Intent(this, CarteAjouter.class);
+
+        Button vueModifierEvenementActionModifierEmplacement =
+            (Button) findViewById(R.id.vue_modifier_evenement_action_modifier_emplacement);
+
+        vueModifierEvenementActionModifierEmplacement.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enregistrerEvenement();
+                    intentionNaviguerModifierEmplacement =
+                        new Intent(ModifierEvenement.this, CarteModifier.class);
+                    intentionNaviguerModifierEmplacement.putExtra("id_evenement", evenement.getId());
+                    startActivityForResult(intentionNaviguerModifierEmplacement,ModifierEvenement.ACTIVITE_MODIFIER_EMPLACEMENT);
                 }
             }
         );

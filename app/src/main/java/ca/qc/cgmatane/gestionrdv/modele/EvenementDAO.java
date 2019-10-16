@@ -166,7 +166,7 @@ public class EvenementDAO {
         cv.put("moment", dateModifier);
         cv.put("latitude", latitude);
         cv.put("longitude", longitude);
-        accesseurBaseDeDonnees.getInstance(context).getWritableDatabase().update("evenement", cv, "id=" + evenement.getId(), null  );
+        accesseurBaseDeDonnees.getWritableDatabase().update("evenement", cv, "id=" + evenement.getId(), null  );
     }
     public List<HashMap<String,String>> recupererListeEvenementPourAdapteur(){
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();

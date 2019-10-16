@@ -42,6 +42,10 @@
             android:name=".vue.CarteAjouter"
             android:label="@string/title_activity_maps">
         </activity>
+        <activity
+            android:name=".vue.CarteModifier"
+            android:label="@string/title_activity_maps">
+        </activity>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
