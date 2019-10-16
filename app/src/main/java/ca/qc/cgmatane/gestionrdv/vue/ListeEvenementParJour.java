@@ -22,6 +22,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
     public static final int ACTIVITE_AJOUTER_EVENEMENT = 1;
     public static final int ACTIVITE_MODIFIER_EVENEMENT = 2;
 
+    protected String dateChoisie;
 
     protected ListView vueListeEvenementsListeEvenements;
     protected TextView vueListeEvenementsTexteDateChoisie;
@@ -44,7 +45,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
         setContentView(R.layout.vue_liste_evenement_par_jour);
 
         Bundle parametres = this.getIntent().getExtras();
-        final String dateChoisie = (String) parametres.get("date");
+        dateChoisie = parametres.getString("date");
 
         vueListeEvenementsTexteDateChoisie = (TextView) findViewById(R.id.vue_liste_evenements_texte_date_choisie);
         vueListeEvenementsTexteDateChoisie.setText("Date choisie: " + dateChoisie);
@@ -94,7 +95,17 @@ public class ListeEvenementParJour extends AppCompatActivity {
 
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
         // TODO
+        //afficherEvenementsDuJour(dateChoisie);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         afficherEvenementsDuJour(dateChoisie);
+
+        //annulerToutesAlarmes();
+        //definirToutesAlarmes(accesseurLivre.listerLivres());
     }
 
     protected void afficherEvenementsDuJour(String jourChoisi){

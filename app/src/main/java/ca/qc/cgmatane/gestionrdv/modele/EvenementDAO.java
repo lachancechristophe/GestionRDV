@@ -69,8 +69,6 @@ public class EvenementDAO {
         int indexLatitute = curseur.getColumnIndex("latitude");
         int indexLongitude = curseur.getColumnIndex("longitude");
 
-
-
         for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
             int id = curseur.getInt(indexId);
             String nom = curseur.getString(indexNom);
@@ -83,7 +81,6 @@ public class EvenementDAO {
             SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
             Date date = null;
             try {
-
                 date = formater.parse(moment);
 
             } catch (ParseException e) {
@@ -96,16 +93,15 @@ public class EvenementDAO {
         }
 
         return listeEvenement;
-
-
     }
 
     public List<Evenement> getEvenementsParJour(String dateRecherche, Context context){
 
         String lendemain = recupererlendemain(dateRecherche);
-        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
+        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment LIKE '" + dateRecherche + "%' OR moment LIKE '" + lendemain + "%'";
+        //String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
         //String LISTER_EVENEMENTS = "SELECT * FROM evenement";
-        Cursor curseur = ControleurSQLite.getInstance(context).getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
+        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
 
         this.listeEvenement.clear();
         Evenement evenement;
@@ -175,30 +171,21 @@ public class EvenementDAO {
         for(Evenement evenement:listeEvenement){
 
             listeEvenementPourAdapteur.add(evenement.obtenirEvenementPourAdapteur());
-
-
         }
         return listeEvenementPourAdapteur;
     }
 
     public List<HashMap<String,String>> recupererListeEvenementParJourPourAdapteur(String jour, Context context){
 
-
-
-
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
         List<Evenement> listeEvenementDuJour = getEvenementsParJour(jour, context);
 
         for(Evenement evenement:listeEvenement){
-
             listeEvenementPourAdapteur.add(evenement.obtenirEvenementPourAdapteur());
-
 
         }
         return listeEvenementPourAdapteur;
     }
-
-
 
     public Evenement chercherEvenementParIdEvenement(int id_evenement){
 
@@ -234,7 +221,7 @@ public class EvenementDAO {
     }
 
     private String recupererlendemain(String date){
-        String FORMAT= "d/MM/yyyy";
+        String FORMAT= "dd/MM/yyyy";
 
         SimpleDateFormat formatDate = new SimpleDateFormat(FORMAT);
         Date date1 = null;
