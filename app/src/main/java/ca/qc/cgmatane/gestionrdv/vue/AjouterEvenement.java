@@ -29,6 +29,7 @@ public class AjouterEvenement extends AppCompatActivity {
     protected EditText vueAjouterEvenementChampNomEndroit;
     protected TextView vueAjouterEvenementTexteHeure;
     protected TextView vueAjouterEvenementTextePosition;
+    protected EvenementDAO eDAO;
     protected CalendarView vueAjouterEvenementChampDate;
     protected LatLng pointGPS;
     protected Date echeance;
@@ -46,6 +47,7 @@ public class AjouterEvenement extends AppCompatActivity {
 
         date = getIntent().getExtras().getString("date");
 
+        eDAO = EvenementDAO.getInstance();
         try{
             echeance = new SimpleDateFormat("dd/MM/yyyy").parse(date);
         }
@@ -128,7 +130,8 @@ public class AjouterEvenement extends AppCompatActivity {
         EvenementDAO accesseurEvenements = EvenementDAO.getInstance();
 
         Evenement event = new Evenement(
-                EvenementDAO.getInstance().getTousEvenements().size() + 1,
+                //EvenementDAO.getInstance().getTousEvenements().size() + 1,
+                EvenementDAO.getInstance().getNbEvenements() + 1,
                 vueAjouterEvenementChampNom.getText().toString(),
                 vueAjouterEvenementChampDescription.getText().toString(),
                 vueAjouterEvenementChampNomEndroit.getText().toString(),

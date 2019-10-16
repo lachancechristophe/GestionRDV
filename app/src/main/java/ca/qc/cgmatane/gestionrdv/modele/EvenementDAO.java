@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,18 @@ public class EvenementDAO {
 
     public void rafraichirBD(){
         this.accesseurBaseDeDonnees = ControleurSQLite.getInstance();
+    }
+
+    public Integer getNbEvenements(){
+        String COMPTER_EVENEMENTS = "SELECT COUNT() FROM evenement";
+
+
+        Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(COMPTER_EVENEMENTS, null);
+        for(curseur.moveToFirst();!curseur.isAfterLast();curseur.moveToNext()){
+            return curseur.getInt(1);
+        }
+
+        return 0;
     }
 
     public List<Evenement> getTousEvenements(){
