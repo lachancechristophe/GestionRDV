@@ -173,7 +173,7 @@ public class EvenementDAO {
 
 
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
-        getEvenementsParJour(jour, context);
+        List<Evenement> listeEvenementDuJour = getEvenementsParJour(jour, context);
 
         for(Evenement evenement:listeEvenement){
 

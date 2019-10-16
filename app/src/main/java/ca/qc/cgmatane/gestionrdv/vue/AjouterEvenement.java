@@ -30,6 +30,7 @@ public class AjouterEvenement extends AppCompatActivity {
     protected CalendarView vueAjouterEvenementChampDate;
     protected LatLng pointGPS;
     protected Date echeance;
+    protected String date;
     protected Intent intentionRetourVueListe;
 
     public static final int ACTIVITE_LISTE_EVENEMENT = 1;
@@ -38,8 +39,10 @@ public class AjouterEvenement extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_evenement);
-        //TODO: Passer le point GPS en extra
+
         pointGPS = getIntent().getExtras().getParcelable("Position");
+
+        date = getIntent().getExtras().getString("date");
 
         echeance = new Date();
         echeance.setHours(12);
@@ -77,11 +80,15 @@ public class AjouterEvenement extends AppCompatActivity {
                 showDialog(2);
             }
         });
-        intentionRetourVueListe = new Intent(this, AjouterEvenement.class);
+        intentionRetourVueListe = new Intent(this, ListeEvenementParJour.class);
 
         vueAjouterEvenementTexteHeure = (TextView) findViewById(R.id.vue_ajouter_evenement_texte_heure);
         vueAjouterEvenementTextePosition = (TextView) findViewById(R.id.vue_ajouter_evenement_texte_position);
         vueAjouterEvenementTextePosition.setText("Position: " + pointGPS.toString());
+
+        vueAjouterEvenementChampNom = (EditText) findViewById(R.id.vue_ajouter_evenement_champ_nom);
+        vueAjouterEvenementChampDescription = (EditText) findViewById(R.id.vue_ajouter_evenement_champ_description);
+        vueAjouterEvenementChampNomEndroit = (EditText) findViewById(R.id.vue_ajouter_evenement_champ_nom_endroit);
     }
 
     @Override
@@ -106,7 +113,9 @@ public class AjouterEvenement extends AppCompatActivity {
     };
 
     private void enregistrerEvenement(){
+        
         System.out.println(echeance);
+
         EvenementDAO accesseurEvenements = EvenementDAO.getInstance();
 
         Evenement event = new Evenement(
@@ -125,7 +134,7 @@ public class AjouterEvenement extends AppCompatActivity {
         this.finish();
     }
     private void  naviguerRetourListeEvenements(){
-
+        intentionRetourVueListe.putExtra("date", date);
         startActivityForResult(intentionRetourVueListe, ACTIVITE_LISTE_EVENEMENT);
     }
 

@@ -44,9 +44,10 @@ public class ListeEvenementParJour extends AppCompatActivity {
         setContentView(R.layout.vue_liste_evenement_par_jour);
 
         Bundle parametres = this.getIntent().getExtras();
-        String dateChoisie = (String) parametres.get("date");
+        final String dateChoisie = (String) parametres.get("date");
 
-        vueListeEvenementsTexteDateChoisie = (TextView) findViewById(R.id.vue_liste_evenements_texte_heure_choisie);
+        vueListeEvenementsTexteDateChoisie = (TextView) findViewById(R.id.vue_liste_evenements_texte_date_choisie);
+        vueListeEvenementsTexteDateChoisie.setText("Date choisie: " + dateChoisie);
         vueListeEvenementsListeEvenements = (ListView)findViewById(R.id.vue_liste_evenements_liste_affichage);
 
         intentionNaviguerAjouterEvenement = new Intent(this, CarteAjouter.class);
@@ -60,6 +61,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    intentionNaviguerAjouterEvenement.putExtra("date", dateChoisie);
                     startActivityForResult(intentionNaviguerAjouterEvenement,ListeEvenementParJour.ACTIVITE_AJOUTER_EVENEMENT);
                 }
             }

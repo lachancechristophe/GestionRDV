@@ -16,16 +16,16 @@ tools:context=".vue.ListeEvenementParJour">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_liste_evenements_texte_heure_choisie">
+        app:layout_constraintTop_toBottomOf="@+id/vue_liste_evenements_texte_date_choisie">
 
     </ListView>
 
     <TextView
-        android:id="@+id/vue_liste_evenements_texte_heure_choisie"
+        android:id="@+id/vue_liste_evenements_texte_date_choisie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="Date choisie"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="176dp" />
 
