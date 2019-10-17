@@ -37,7 +37,6 @@ public class ModifierEvenement extends AppCompatActivity {
     protected EditText vueModifierEvenementChampNomEndroit;
     protected TextView vueModifierEvenementChampEchance;
     protected CalendarView vueModifierEvenementChampDate;
-    protected LatLng pointGPS;
     protected Date moment;
 
     protected Intent intentionNaviguerModifierEmplacement;
@@ -83,7 +82,6 @@ public class ModifierEvenement extends AppCompatActivity {
         echanceChoisie = format_echance.format(moment);
         vueModifierEvenementChampEchance.setText(echanceChoisie);
 
-        pointGPS = evenement.getPointGPS();
 
 
 
@@ -131,7 +129,7 @@ public class ModifierEvenement extends AppCompatActivity {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    enregistrerEvenement();
+
                     intentionNaviguerModifierEmplacement =
                         new Intent(ModifierEvenement.this, CarteModifier.class);
                     intentionNaviguerModifierEmplacement.putExtra("id_evenement", evenement.getId());
@@ -149,7 +147,6 @@ public class ModifierEvenement extends AppCompatActivity {
         evenement.setNom(vueModifierEvenementChampNom.getText().toString());
         evenement.setDescription(vueModifierEvenementChampDescription.getText().toString());
         evenement.setNom_endroit(vueModifierEvenementChampNomEndroit.getText().toString());
-        evenement.setPointGPS(pointGPS);
         echanceChoisie = vueModifierEvenementChampEchance.getText().toString();
         SimpleDateFormat formatter = new SimpleDateFormat(MOMENT_FORMAT);
         String date = dateChoisie+" "+echanceChoisie;
