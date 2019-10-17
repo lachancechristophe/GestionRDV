@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -96,12 +97,11 @@ public class EvenementDAO {
     }
 
     public List<Evenement> getEvenementsParJour(String dateRecherche, Context context){
-
         rafraichirBD(context);
         String lendemain = recupererlendemain(dateRecherche);
-        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment LIKE '" + dateRecherche + "%' OR moment LIKE '" + lendemain + "%'";
+        //String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment LIKE '" + dateRecherche + "%' OR moment LIKE '" + lendemain + "%'";
         //String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
-        //String LISTER_EVENEMENTS = "SELECT * FROM evenement";
+        String LISTER_EVENEMENTS = "SELECT * FROM evenement";
         Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
 
         this.listeEvenement.clear();
@@ -137,22 +137,24 @@ public class EvenementDAO {
         return listeEvenement;
     }
 
-    public void ajouterEvenement(Evenement evenement){
+    public void ajouterEvenement(Evenement evenement, Context context){
+        accesseurBaseDeDonnees = ControleurSQLite.getInstance(context);
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         String date = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
         String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('"
             + evenement.getNom() + "','" + evenement.getDescription()
-            +"', '" +evenement.getNom_endroit()+"', '" + date +"', '" + latitude +"', '" + longitude + "')";
-        accesseurBaseDeDonnees.getWritableDatabase().execSQL(AJOUTER_EVENEMENT);
+            +"', '" +evenement.getNom_endroit()+"', '" + date +"', " + latitude +", " + longitude + ")";
+        accesseurBaseDeDonnees.getWritableDatabase().rawQuery(AJOUTER_EVENEMENT, null);
+        Log.d("query", AJOUTER_EVENEMENT);
     }
 
     public void modifierEvenement(Evenement evenement, Context context){
 
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
         String dateModifier = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
@@ -181,7 +183,7 @@ public class EvenementDAO {
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
         List<Evenement> listeEvenementDuJour = getEvenementsParJour(jour, context);
 
-        for(Evenement evenement:listeEvenement){
+        for(Evenement evenement : listeEvenementDuJour){
             listeEvenementPourAdapteur.add(evenement.obtenirEvenementPourAdapteur());
 
         }

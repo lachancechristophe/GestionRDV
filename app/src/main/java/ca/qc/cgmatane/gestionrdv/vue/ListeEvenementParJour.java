@@ -109,17 +109,17 @@ public class ListeEvenementParJour extends AppCompatActivity {
     }
 
     protected void afficherEvenementsDuJour(String jourChoisi){
-
+        EvenementDAO.getInstance().rafraichirBD(this);
         //TODO Get les events et les transformer en arraylist de hashmap string string
         List<HashMap<String,String>> listeEvenements = EvenementDAO.getInstance().recupererListeEvenementParJourPourAdapteur(jourChoisi, this); //accesseurEvenement.getTousEvenements();
 
-        SimpleAdapter adapteurVueBibliothequeListeEvenementss = new SimpleAdapter(
+        SimpleAdapter adapteurVueBibliothequeListeEvenements = new SimpleAdapter(
                 this,
                 listeEvenements,
                 android.R.layout.two_line_list_item,
                 new String[] {"nom", "description"}, // l'indice utilisé dans les hashmap
                 new int[] {android.R.id.text1, android.R.id.text2});
 
-        vueListeEvenementsListeEvenements.setAdapter(adapteurVueBibliothequeListeEvenementss);
+        vueListeEvenementsListeEvenements.setAdapter(adapteurVueBibliothequeListeEvenements);
     }
 }

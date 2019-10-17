@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import ca.qc.cgmatane.gestionrdv.R;
 import ca.qc.cgmatane.gestionrdv.modele.Evenement;
@@ -124,10 +125,8 @@ public class AjouterEvenement extends AppCompatActivity {
     };
 
     private void enregistrerEvenement(){
+        eDAO.rafraichirBD(this);
 
-        System.out.println(echeance);
-
-        EvenementDAO accesseurEvenements = EvenementDAO.getInstance();
         int nbEvents = eDAO.getNbEvenements() + 1;
         Evenement event = new Evenement(
                 //EvenementDAO.getInstance().getTousEvenements().size() + 1,
@@ -137,7 +136,9 @@ public class AjouterEvenement extends AppCompatActivity {
                 vueAjouterEvenementChampNomEndroit.getText().toString(),
                 pointGPS,
                 echeance);
-        accesseurEvenements.ajouterEvenement(event);
+        eDAO.ajouterEvenement(event, this);
+
+        List<Evenement> liste =  eDAO.getTousEvenements();
 
         naviguerRetourListeEvenements();
     }

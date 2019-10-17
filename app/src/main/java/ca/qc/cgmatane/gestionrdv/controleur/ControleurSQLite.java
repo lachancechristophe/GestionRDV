@@ -35,10 +35,13 @@ public class ControleurSQLite extends SQLiteOpenHelper {
         String INSERT_1 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Reunion', 'Reunion pour projet X', 'Cegep Matane', '3/10/2019 12:40', 48.840677, -67.497457)";
         String INSERT_2 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Rendez-Vous', 'Rendez-Vous pour abandonner le Cegep', 'Cegep Matane', '24/11/2019 12:00', 48.840677, -67.497457)";
         String INSERT_3 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Competition', 'Tournoi national du lancer de patate', 'Cegep Matane', '4/4/2020 12:00', 48.840677, -67.497457)";
+        String INSERT_4 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Nomwqeasfsadgashedfg','adfgasdfgadfg', 'Endroitadfadfgasdfgasdfgasdfgasfgasdfgasfgasfgdgadgsdfgsgadfg', '16/10/2019 12:20', 48.846482782542125, -67.50114396214485)";
+
 
         db.execSQL(INSERT_1);
         db.execSQL(INSERT_2);
         db.execSQL(INSERT_3);
+        db.execSQL(INSERT_4);
 
     }
 
