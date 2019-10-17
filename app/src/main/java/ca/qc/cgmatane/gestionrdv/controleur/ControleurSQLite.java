@@ -29,7 +29,7 @@ public class ControleurSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onOpen(SQLiteDatabase db) {
-        String DELETE = "delete from evenement where 1 = 1";
+        /*String DELETE = "delete from evenement where 1 = 1";
         db.execSQL(DELETE);
 
         String INSERT_1 = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('Reunion', 'Reunion pour projet X', 'Cegep Matane', '3/10/2019 12:40', 48.840677, -67.497457)";
@@ -41,7 +41,7 @@ public class ControleurSQLite extends SQLiteOpenHelper {
         db.execSQL(INSERT_1);
         db.execSQL(INSERT_2);
         db.execSQL(INSERT_3);
-        db.execSQL(INSERT_4);
+        db.execSQL(INSERT_4);*/
 
     }
 

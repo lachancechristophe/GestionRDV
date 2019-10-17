@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,8 +23,9 @@ import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 
 public class ModifierEvenement extends AppCompatActivity {
 
-    public static final String HEURE_FORMAT = "HH:mm";
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String HEURE_FORMAT = "hh:mm";
+    public static final String DATE_FORMAT = "d/M/yyyy";
+    public static final String MOMENT_FORMAT = "d/M/yyyy hh:mm";
     public static final int ACTIVITE_MODIFIER_EMPLACEMENT = 1;
 
 
@@ -36,17 +38,14 @@ public class ModifierEvenement extends AppCompatActivity {
     protected TextView vueModifierEvenementChampEchance;
     protected CalendarView vueModifierEvenementChampDate;
     protected LatLng pointGPS;
-    protected String echeance;
     protected Date moment;
 
     protected Intent intentionNaviguerModifierEmplacement;
 
-    private String echanceChoisi;
+    private String echanceChoisie;
     private String dateChoisie;
 
-    //TODO : recuperer l'evenement
-    //              +
-    //       ecouter la modification de la date
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +75,13 @@ public class ModifierEvenement extends AppCompatActivity {
         moment = evenement.getMoment();
         SimpleDateFormat format_date = new SimpleDateFormat(DATE_FORMAT);
         dateChoisie = format_date.format(moment);
+        System.out.println(dateChoisie);
         long momentEnMilliseconds = moment.getTime();
         vueModifierEvenementChampDate.setDate(momentEnMilliseconds);
 
         SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);
-        echeance = format_echance.format(moment);
-        vueModifierEvenementChampEchance.setText(echeance);
+        echanceChoisie = format_echance.format(moment);
+        vueModifierEvenementChampEchance.setText(echanceChoisie);
 
         pointGPS = evenement.getPointGPS();
 
@@ -142,9 +142,7 @@ public class ModifierEvenement extends AppCompatActivity {
 
 
     }
-    //TODO : recuperer les coordonnées dans pointGPS
-    //                      +
-    //       recuperer la modification du moment(date+heure)
+
     private void enregistrerEvenement() {
 
 
@@ -152,12 +150,20 @@ public class ModifierEvenement extends AppCompatActivity {
         evenement.setDescription(vueModifierEvenementChampDescription.getText().toString());
         evenement.setNom_endroit(vueModifierEvenementChampNomEndroit.getText().toString());
         evenement.setPointGPS(pointGPS);
-        echanceChoisi = vueModifierEvenementChampEchance.getText().toString();
-        moment = new Date(dateChoisie+" "+echanceChoisi);
+        echanceChoisie = vueModifierEvenementChampEchance.getText().toString();
+        SimpleDateFormat formatter = new SimpleDateFormat(MOMENT_FORMAT);
+        String date = dateChoisie+" "+echanceChoisie;
+        try {
+            moment = formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(moment);
+        System.out.println(dateChoisie+" "+echanceChoisie);
         evenement.setMoment(moment);
 
 
-        accesseurEvenement.modifierEvenement(evenement,this);
+        accesseurEvenement.modifierEvenement(evenement);
 
         naviguerRetourListeEvenementParJour();
     }

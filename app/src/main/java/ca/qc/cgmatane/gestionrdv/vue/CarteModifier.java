@@ -29,8 +29,8 @@ public class CarteModifier extends FragmentActivity implements OnMapReadyCallbac
     private LatLng coordonnes;
     private Marker markeur;
     private Button vueCarteActionNaviguerRetour;
-    private Button vueCarteActionNaviguerAjouterEvenement;
-    private Intent intentionAjouterEvenement;
+    private Button vueCarteActionNaviguerModifierEvenement;
+    private Intent intentionModifierEvenement;
 
     protected EvenementDAO accesseurEvenement;
     protected Evenement evenement;
@@ -60,20 +60,20 @@ public class CarteModifier extends FragmentActivity implements OnMapReadyCallbac
         vueCarteActionNaviguerRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                naviguerRetourModifierEvenement();
+                naviguerRetour();
             }
         });
 
-        vueCarteActionNaviguerAjouterEvenement = (Button)findViewById(R.id.vue_carte_action_naviguer_modifier_evenement);
-        vueCarteActionNaviguerAjouterEvenement.setOnClickListener(new View.OnClickListener() {
+        vueCarteActionNaviguerModifierEvenement = (Button)findViewById(R.id.vue_carte_action_naviguer_modifier_evenement);
+        vueCarteActionNaviguerModifierEvenement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                naviguerAjouterEvenements();
+                naviguerModifierEvenement();
             }
         });
 
 
-        intentionAjouterEvenement = new Intent(this, AjouterEvenement.class);
+
     }
 
     protected void onActivityResult(int activite, int resultat, Intent donnees){
@@ -82,12 +82,12 @@ public class CarteModifier extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
-    private void naviguerAjouterEvenements(){
+    private void naviguerModifierEvenement(){
         evenement.setPointGPS(markeur.getPosition());
         this.finish();
     }
 
-    private void naviguerRetourModifierEvenement() {
+    private void naviguerRetour() {
         this.finish();
     }
 

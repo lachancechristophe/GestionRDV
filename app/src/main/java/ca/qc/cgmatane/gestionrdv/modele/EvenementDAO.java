@@ -79,7 +79,7 @@ public class EvenementDAO {
             double latitude = curseur.getDouble(indexLatitute);
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
-            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formater = new SimpleDateFormat("d/M/yyyy hh:mm");
             Date date = null;
             try {
                 date = formater.parse(moment);
@@ -100,8 +100,8 @@ public class EvenementDAO {
         rafraichirBD(context);
         String lendemain = recupererlendemain(dateRecherche);
         //String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment LIKE '" + dateRecherche + "%' OR moment LIKE '" + lendemain + "%'";
-        //String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
-        String LISTER_EVENEMENTS = "SELECT * FROM evenement";
+        String LISTER_EVENEMENTS = "SELECT * FROM evenement WHERE moment >= '" + dateRecherche + "' AND moment <= '"+lendemain+"'";
+        //String LISTER_EVENEMENTS = "SELECT * FROM evenement";
         Cursor curseur = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_EVENEMENTS, null);
 
         this.listeEvenement.clear();
@@ -138,34 +138,56 @@ public class EvenementDAO {
     }
 
     public void ajouterEvenement(Evenement evenement, Context context){
-        accesseurBaseDeDonnees = ControleurSQLite.getInstance(context);
+
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy hh:mm");
         String date = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
-        String AJOUTER_EVENEMENT = "insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES('"
-            + evenement.getNom() + "','" + evenement.getDescription()
-            +"', '" +evenement.getNom_endroit()+"', '" + date +"', " + latitude +", " + longitude + ")";
-        accesseurBaseDeDonnees.getWritableDatabase().rawQuery(AJOUTER_EVENEMENT, null);
-        Log.d("query", AJOUTER_EVENEMENT);
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        SQLiteStatement query = db.compileStatement("insert into evenement(nom, description, nom_endroit, moment, latitude, longitude) VALUES(?,?,?,?,?,?)");
+        query.bindString(1, evenement.getNom());
+        query.bindString(2, evenement.getDescription());
+        query.bindString(3, evenement.getNom_endroit());
+        query.bindString(4, date);
+        query.bindDouble(5, latitude);
+        query.bindDouble(6, longitude);
+
+        query.execute();
+
+
+
     }
 
-    public void modifierEvenement(Evenement evenement, Context context){
+    public void modifierEvenement(Evenement evenement){
+
 
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy hh:mm");
         String dateModifier = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
-        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        SQLiteStatement query = db.compileStatement("UPDATE evenement SET nom = ?, description = ?, nom_endroit = ?, moment = ?, latitude  = ?, longitude  = ? WHERE id = ? ");
+        query.bindString(1, evenement.getNom());
+        query.bindString(2, evenement.getDescription());
+        query.bindString(3, evenement.getNom_endroit());
+        query.bindString(4, dateModifier);
+        query.bindDouble(5, latitude);
+        query.bindDouble(6, longitude);
+        query.bindDouble(7, evenement.getId());
+
+
+        query.execute();
+        System.out.println(query.toString()+dateModifier);
+        /*ContentValues cv = new ContentValues();
         cv.put("nom", evenement.getNom());
         cv.put("description", evenement.getDescription());
         cv.put("nom_endroit", evenement.getNom_endroit());
         cv.put("moment", dateModifier);
         cv.put("latitude", latitude);
         cv.put("longitude", longitude);
-        accesseurBaseDeDonnees.getWritableDatabase().update("evenement", cv, "id=" + evenement.getId(), null  );
+        accesseurBaseDeDonnees.getWritableDatabase().update("evenement", cv, "id=" + evenement.getId(), null  );*/
     }
     public List<HashMap<String,String>> recupererListeEvenementPourAdapteur(){
         List<HashMap<String,String>> listeEvenementPourAdapteur = new ArrayList<HashMap<String, String>>();
@@ -224,7 +246,7 @@ public class EvenementDAO {
     }
 
     private String recupererlendemain(String date){
-        String FORMAT= "dd/MM/yyyy";
+        String FORMAT= "d/M/yyyy";
 
         SimpleDateFormat formatDate = new SimpleDateFormat(FORMAT);
         Date date1 = null;
