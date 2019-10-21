@@ -34,7 +34,6 @@ public class ListeEvenementParJour extends AppCompatActivity {
 
     protected Intent intentionNaviguerAjouterEvenement;
     protected Intent intentionNaviguerModifierEvenement;
-    protected Intent intentionNaviguerAlerte;
 
     protected AlarmManager gestionnaireAlertes;
     protected HashMap<Integer, PendingIntent> listeIntentionsLatentesAlertes;
@@ -69,6 +68,8 @@ public class ListeEvenementParJour extends AppCompatActivity {
             }
         );
 
+        //vueListeEvenementsListeEvenements.setOnIt
+
         vueListeEvenementsListeEvenements.setOnItemClickListener(
             new AdapterView.OnItemClickListener(){
                 public void onItemClick(
@@ -95,8 +96,6 @@ public class ListeEvenementParJour extends AppCompatActivity {
         );
 
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
-
-        intentionNaviguerAlerte = new Intent();
     }
 
     @Override
