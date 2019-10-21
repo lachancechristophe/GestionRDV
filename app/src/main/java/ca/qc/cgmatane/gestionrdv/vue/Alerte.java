@@ -77,6 +77,6 @@ public class Alerte extends AppCompatActivity {
     }
 
     private void marquerFait() {
-        accesseurEvenement.effacerEvenement(evenement);
+        accesseurEvenement.effacerEvenement(id_evenement);
     }
 }

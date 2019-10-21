@@ -220,8 +220,13 @@ public class EvenementDAO {
         return null;
     }
 
-    public void effacerEvenement(Evenement rdv){
-        //TODO: Remove from DB
+    public void effacerEvenement(Integer id_evenement){
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        SQLiteStatement query = db.compileStatement("DELETE FROM evenement WHERE id = ? ");
+        query.bindDouble(1, id_evenement);
+
+        query.execute();
+        System.out.println("Deleted id: " + id_evenement);
     }
 
     private String recupererDatePourCalendarView(String moment){

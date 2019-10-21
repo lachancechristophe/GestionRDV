@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +113,8 @@ public class ListeEvenementParJour extends AppCompatActivity {
         if(listeIntentionsLatentesAlertes == null) listeIntentionsLatentesAlertes = new HashMap<>();
 
         for(Evenement event : EvenementDAO.getInstance().getTousEvenements()) {
+            if(event.getMoment().before(new Date())) continue;
+
             Intent intentionAlerte = new Intent(this, Alerte.class);
 
             intentionAlerte.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

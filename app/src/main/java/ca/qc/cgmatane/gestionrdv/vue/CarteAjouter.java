@@ -71,6 +71,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void naviguerListeEvenements(){
+        this.finish();
     }
 
     private void naviguerAjouterEvenements(){
