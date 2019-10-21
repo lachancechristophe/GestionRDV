@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vue.ModifierEvenement">
+    tools:context=".vue.Alerte">
 
     <TextView
         android:id="@+id/textView5"
@@ -13,7 +13,7 @@
         android:layout_marginStart="169dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="184dp"
-        android:text="Modifier l'événement"
+        android:text="Alerte"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,14 +21,14 @@
 
 
     <Button
-        android:id="@+id/vue_modifier_evenement_action_enregistrer"
+        android:id="@+id/vue_alerte_action_valider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="Enregistrer les modifications"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:text="Marquer comme fait"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_nom_endroit" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_alerte_champ_nom_endroit" />
 
     <TextView
         android:id="@+id/textView6"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/vue_modifier_evenement_champ_nom"
+        android:id="@+id/vue_alerte_champ_nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -52,14 +52,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/vue_modifier_evenement_champ_description"
+        android:id="@+id/vue_alerte_champ_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="91dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_nom" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_alerte_champ_nom" />
 
     <TextView
         android:id="@+id/textView8"
@@ -71,40 +71,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <CalendarView
-        android:id="@+id/vue_modifier_evenement_champ_date"
-        android:layout_width="365dp"
-        android:layout_height="253dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_echeance" />
-
     <Button
-        android:id="@+id/vue_modifier_evenement_action_modifier_emplacement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:text="Emplacement"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_date" />
-
-    <Button
-        android:id="@+id/vue_modifier_evenement_action_retour"
+        android:id="@+id/vue_alerte_action_retour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="448dp"
         android:text="Retour"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vue_modifier_evenement_action_enregistrer"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_action_modifier_emplacement"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toStartOf="@+id/vue_alerte_action_valider"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView10"
@@ -117,23 +95,35 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/vue_modifier_evenement_champ_echeance"
+        android:id="@+id/vue_alerte_champ_echeance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="91dp"
         android:ems="10"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_description" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_alerte_champ_description" />
 
     <EditText
-        android:id="@+id/vue_modifier_evenement_champ_nom_endroit"
+        android:id="@+id/vue_alerte_champ_nom_endroit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/vue_modifier_evenement_action_modifier_emplacement"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_date" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_alerte_champ_echeance"
+        tools:layout_editor_absoluteX="107dp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Endroit:"
+        app:layout_constraintEnd_toStartOf="@+id/vue_alerte_champ_nom_endroit"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
 </android.support.constraint.ConstraintLayout>

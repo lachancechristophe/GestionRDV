@@ -1,5 +1,7 @@
 package ca.qc.cgmatane.gestionrdv.vue;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ca.qc.cgmatane.gestionrdv.R;
+import ca.qc.cgmatane.gestionrdv.modele.Evenement;
 import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 
 public class ListeEvenementParJour extends AppCompatActivity {
@@ -31,12 +35,8 @@ public class ListeEvenementParJour extends AppCompatActivity {
     protected Intent intentionNaviguerModifierEvenement;
     protected Intent intentionNaviguerAlerte;
 
-
-
-    /* TODO Gérer les alarmes
     protected AlarmManager gestionnaireAlertes;
     protected HashMap<Integer, PendingIntent> listeIntentionsLatentesAlertes;
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +94,8 @@ public class ListeEvenementParJour extends AppCompatActivity {
         );
 
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
-        // TODO
-        //afficherEvenementsDuJour(dateChoisie);
+
+        intentionNaviguerAlerte = new Intent();
     }
 
     @Override
@@ -104,8 +104,38 @@ public class ListeEvenementParJour extends AppCompatActivity {
 
         afficherEvenementsDuJour(dateChoisie);
 
-        //annulerToutesAlarmes();
-        //definirToutesAlarmes(accesseurLivre.listerLivres());
+        annulerToutesAlarmes();
+        definirToutesAlarmes();
+    }
+
+    private void definirToutesAlarmes() {
+        if(listeIntentionsLatentesAlertes == null) listeIntentionsLatentesAlertes = new HashMap<>();
+
+        for(Evenement event : EvenementDAO.getInstance().getTousEvenements()) {
+            Intent intentionAlerte = new Intent(this, Alerte.class);
+
+            intentionAlerte.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentionAlerte.putExtra("id", event.getId());
+            int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
+            PendingIntent intentionLatente = PendingIntent
+                    .getActivity(this, uniqueInt, intentionAlerte, 0);
+            listeIntentionsLatentesAlertes.put(event.getId(), intentionLatente);
+            gestionnaireAlertes = (AlarmManager)getSystemService(ALARM_SERVICE);
+            gestionnaireAlertes.setExact(AlarmManager.RTC_WAKEUP,
+                    event.getMoment().getTime(), intentionLatente);
+        }
+    }
+
+    private void annulerToutesAlarmes() {
+        if(listeIntentionsLatentesAlertes == null) return;
+        for(Map.Entry<Integer, PendingIntent> paire : listeIntentionsLatentesAlertes.entrySet()){
+            PendingIntent intentionLatente = paire.getValue();
+
+            gestionnaireAlertes.cancel(intentionLatente);
+            intentionLatente.cancel();
+        }
+        listeIntentionsLatentesAlertes.clear();
+
     }
 
     protected void afficherEvenementsDuJour(String jourChoisi){
