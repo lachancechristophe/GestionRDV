@@ -23,9 +23,9 @@ import ca.qc.cgmatane.gestionrdv.modele.EvenementDAO;
 
 public class ModifierEvenement extends AppCompatActivity {
 
-    public static final String HEURE_FORMAT = "hh:mm a";
+    public static final String HEURE_FORMAT = "HH:mm";
     public static final String DATE_FORMAT = "d/M/yyyy";
-    public static final String MOMENT_FORMAT = "d/M/yyyy hh:mm a";
+    public static final String MOMENT_FORMAT = "d/M/yyyy HH:mm";
     public static final int ACTIVITE_MODIFIER_EMPLACEMENT = 1;
 
 
@@ -90,7 +90,7 @@ public class ModifierEvenement extends AppCompatActivity {
 
         SimpleDateFormat format_echance = new SimpleDateFormat(HEURE_FORMAT);
         heureChoisie = format_echance.format(moment);
-        vueModifierEvenementTexteHeure.setText(android.text.format.DateFormat.format("hh:mm a",moment));
+        vueModifierEvenementTexteHeure.setText(android.text.format.DateFormat.format("HH:mm",moment));
 
 
 
@@ -100,7 +100,7 @@ public class ModifierEvenement extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
-
+                month++;
                 dateChoisie = ""+dayOfMonth+"/"+month+"/"+year;
 
             }
@@ -180,7 +180,7 @@ public class ModifierEvenement extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == 2) {
             return new TimePickerDialog(this, observateurTemps,
-                12, 0, false);
+                12, 0, true);
         }
         return null;
     }
@@ -193,8 +193,8 @@ public class ModifierEvenement extends AppCompatActivity {
             dateText.setMinutes(minutes);
             dateText.setSeconds(0);
             vueModifierEvenementTexteHeure.setText(
-                android.text.format.DateFormat.format("hh:mm a", dateText));
-            SimpleDateFormat format_echance = new SimpleDateFormat("hh:mm a");
+                android.text.format.DateFormat.format("HH:mm", dateText));
+            SimpleDateFormat format_echance = new SimpleDateFormat("HH:mm");
             heureChoisie = format_echance.format(dateText);
         }
     };

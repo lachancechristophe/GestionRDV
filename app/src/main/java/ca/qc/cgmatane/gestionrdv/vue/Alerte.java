@@ -67,7 +67,7 @@ public class Alerte extends AppCompatActivity {
         vueAlerteChampNom.setText(evenement.getNom());
         vueAlerteChampDescription.setText(evenement.getDescription());
         vueAlerteChampEndroit.setText(evenement.getNom_endroit());
-        SimpleDateFormat format = new SimpleDateFormat("d/M/yyyy hh:mm a");
+        SimpleDateFormat format = new SimpleDateFormat("d/M/yyyy HH:mm");
         vueAlerteChampEcheance.setText(format.format(evenement.getMoment()));
 
     }

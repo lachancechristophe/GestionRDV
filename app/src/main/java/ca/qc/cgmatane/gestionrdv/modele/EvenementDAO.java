@@ -79,7 +79,7 @@ public class EvenementDAO {
             double latitude = curseur.getDouble(indexLatitute);
             double longitude = curseur.getDouble(indexLongitude);
             LatLng position = new LatLng(latitude,longitude);
-            SimpleDateFormat formater = new SimpleDateFormat("d/M/yyyy hh:mm");
+            SimpleDateFormat formater = new SimpleDateFormat("d/M/yyyy HH:mm");
             Date date = null;
             try {
                 date = formater.parse(moment);
@@ -140,7 +140,7 @@ public class EvenementDAO {
     public void ajouterEvenement(Evenement evenement, Context context){
 
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy HH:mm");
         String date = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
@@ -163,7 +163,7 @@ public class EvenementDAO {
 
 
         Date moment = evenement.getMoment();
-        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy HH:mm");
         String dateModifier = dateFormat.format(moment);
         Double latitude = evenement.getPointGPS().latitude;
         Double longitude = evenement.getPointGPS().longitude;
@@ -231,8 +231,8 @@ public class EvenementDAO {
 
     private String recupererDatePourCalendarView(String moment){
 
-        final String FORMAT_FR = "dd/MM/yyyy hh:mm";
-        final String FORMAT_US = "yyyy/MM/dd hh:mm";
+        final String FORMAT_FR = "dd/MM/yyyy HH:mm";
+        final String FORMAT_US = "yyyy/MM/dd HH:mm";
 
         String ancienneDateString = moment;
         String nouvelleDateString;

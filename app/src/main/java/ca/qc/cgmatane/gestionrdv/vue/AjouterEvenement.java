@@ -56,7 +56,7 @@ public class AjouterEvenement extends AppCompatActivity {
             Log.d("Error", e.getMessage());
             echeance = new Date(date);
         }
-        echeance.setHours(12);
+        echeance.setHours(0);
         echeance.setMinutes(0);
 
         Log.i("date", echeance.toString());
@@ -106,7 +106,7 @@ public class AjouterEvenement extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == 2) {
             return new TimePickerDialog(this, observateurTemps,
-                    12, 0, false);
+                    0, 0, true);
         }
         return null;
     }
@@ -118,7 +118,7 @@ public class AjouterEvenement extends AppCompatActivity {
             echeance.setMinutes(minutes);
             echeance.setSeconds(0);
             vueAjouterEvenementTexteHeure.setText(
-                    android.text.format.DateFormat.format("hh:mm a", echeance));
+                    android.text.format.DateFormat.format("HH:mm", echeance));
             System.out.println(echeance);
         }
     };
@@ -138,6 +138,8 @@ public class AjouterEvenement extends AppCompatActivity {
         eDAO.ajouterEvenement(event, this);
 
         List<Evenement> liste =  eDAO.getTousEvenements();
+
+        System.out.println(echeance);
 
         naviguerRetourListeEvenements();
     }
