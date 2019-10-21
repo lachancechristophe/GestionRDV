@@ -95,6 +95,7 @@ public class ListeEvenementParJour extends AppCompatActivity {
             }
         );
 
+
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
     }
 

@@ -88,7 +88,6 @@ public class AjouterEvenement extends AppCompatActivity {
         vueAjouterEvenementActionChoisirHeure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("ChoisirHeure");
                 showDialog(2);
             }
         });

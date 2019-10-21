@@ -24,7 +24,7 @@
         android:id="@+id/vue_modifier_evenement_action_enregistrer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:text="Enregistrer les modifications"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,19 +73,21 @@
 
     <CalendarView
         android:id="@+id/vue_modifier_evenement_champ_date"
-        android:layout_width="365dp"
-        android:layout_height="253dp"
+        android:layout_width="368dp"
+        android:layout_height="290dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_echeance" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_action_choisir_heure" />
 
     <Button
         android:id="@+id/vue_modifier_evenement_action_modifier_emplacement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
+        android:layout_marginTop="5dp"
         android:text="Emplacement"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_date" />
@@ -95,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="105dp"
         android:text="Retour"
@@ -106,34 +108,49 @@
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_action_modifier_emplacement"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
-        android:text="Echéance"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <EditText
-        android:id="@+id/vue_modifier_evenement_champ_echeance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="91dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_description" />
-
     <EditText
         android:id="@+id/vue_modifier_evenement_champ_nom_endroit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/vue_modifier_evenement_action_modifier_emplacement"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_date" />
+
+    <TextView
+        android:id="@+id/vue_modifier_evenement_texte_heure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginBottom="33dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/vue_modifier_evenement_champ_date"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_description" />
+
+    <Button
+        android:id="@+id/vue_modifier_evenement_action_choisir_heure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="17dp"
+        android:text="Changer heure"
+        app:layout_constraintBottom_toTopOf="@+id/vue_modifier_evenement_champ_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_evenement_champ_description" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="41dp"
+        android:text="Heure"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 </android.support.constraint.ConstraintLayout>
