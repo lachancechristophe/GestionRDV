@@ -30,7 +30,6 @@ public class CarteModifier extends FragmentActivity implements OnMapReadyCallbac
     private Marker markeur;
     private Button vueCarteActionNaviguerRetour;
     private Button vueCarteActionNaviguerModifierEvenement;
-    private Intent intentionModifierEvenement;
 
     protected EvenementDAO accesseurEvenement;
     protected Evenement evenement;
@@ -68,7 +67,15 @@ public class CarteModifier extends FragmentActivity implements OnMapReadyCallbac
         vueCarteActionNaviguerModifierEvenement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                naviguerModifierEvenement();
+                if (markeur != null){
+                    naviguerModifierEvenement();
+                }else{
+                    Toast.makeText(
+                        CarteModifier.this,
+                        "Aucun nouvel endroit sélectionné",
+                        Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -129,7 +136,7 @@ public class CarteModifier extends FragmentActivity implements OnMapReadyCallbac
                 if (markeur != null){markeur.remove();}
                 markeur = mMap.addMarker(new MarkerOptions()
                     .position(point)
-                    .title("Position de l'évènement")
+                    .title("Nouvelle position")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                 compteurTemp++;
             }

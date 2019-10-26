@@ -38,11 +38,15 @@ public class ListeEvenementParJour extends AppCompatActivity {
     protected AlarmManager gestionnaireAlertes;
     protected HashMap<Integer, PendingIntent> listeIntentionsLatentesAlertes;
 
+    protected EvenementDAO accesseurEvenement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //EvenementDAO.getInstance().rafraichirBD();
         setContentView(R.layout.vue_liste_evenement_par_jour);
+
+        this.accesseurEvenement =EvenementDAO.getInstance();
 
         Bundle parametres = this.getIntent().getExtras();
         dateChoisie = parametres.getString("date");
@@ -84,16 +88,35 @@ public class ListeEvenementParJour extends AppCompatActivity {
                     @SuppressWarnings("unchecked")
                     HashMap<String, String> evenement =
                         (HashMap<String, String>)vueListeEvenementsListeEvenementsOnClick.getItemAtPosition((int)positionItem);
-
-
-
                     intentionNaviguerModifierEvenement =
                         new Intent(ListeEvenementParJour.this, ModifierEvenement.class);
+
                     intentionNaviguerModifierEvenement.putExtra("id_evenement", evenement.get("id"));
                     startActivityForResult(intentionNaviguerModifierEvenement,ListeEvenementParJour.ACTIVITE_MODIFIER_EVENEMENT);
                 }
             }
         );
+
+        vueListeEvenementsListeEvenements.setOnItemLongClickListener(
+            new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent,
+                                           View vue,
+                                           int positionDansAdapteur,
+                                           long positionItem) {
+
+                ListView vueListeEvenementsListeEvenementsOnLongClick = (ListView)vue.getParent();
+
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> evenement =
+                    (HashMap<String, String>)vueListeEvenementsListeEvenementsOnLongClick.getItemAtPosition((int)positionItem);
+
+                accesseurEvenement.effacerEvenement(Integer.valueOf(evenement.get("id")));
+                finish();
+                startActivity(getIntent());
+                return true;
+            }
+        });
 
 
         vueListeEvenementsTexteDateChoisie.setText("Evenements le " + dateChoisie);
