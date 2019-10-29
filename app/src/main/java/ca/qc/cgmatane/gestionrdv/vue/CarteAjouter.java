@@ -1,6 +1,12 @@
 package ca.qc.cgmatane.gestionrdv.vue;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +36,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
     private Marker markeur;
     private Button vueCarteActionNaviguerListe;
     private Button vueCarteActionNaviguerAjouterEvenement;
+    private Button vueCarteActionCentrerSurPosition;
     private Intent intentionAjouterEvenement;
 
     @Override
@@ -44,7 +51,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        vueCarteActionNaviguerListe = (Button)findViewById(R.id.vue_carte_action_naviguer_liste);
+        vueCarteActionNaviguerListe = (Button) findViewById(R.id.vue_carte_action_naviguer_liste);
         vueCarteActionNaviguerListe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +59,7 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        vueCarteActionNaviguerAjouterEvenement = (Button)findViewById(R.id.vue_carte_action_naviguer_ajout_evenement);
+        vueCarteActionNaviguerAjouterEvenement = (Button) findViewById(R.id.vue_carte_action_naviguer_ajout_evenement);
         vueCarteActionNaviguerAjouterEvenement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,9 +67,41 @@ public class CarteAjouter extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+       /* vueCarteActionCentrerSurPosition = (Button) findViewById(R.id.vue_carte_action_centrer_sur_position_actuelle);
+        vueCarteActionCentrerSurPosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                centrerSurPosition();
+            }
+        });
+*/
 
         intentionAjouterEvenement = new Intent(this, AjouterEvenement.class);
     }
+
+    private void centrerSurPosition() {
+        Location positionActuelle = getLastLocation();
+        LatLng point = new LatLng(positionActuelle.getLatitude(), positionActuelle.getLongitude());
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 12f));
+    }
+
+    private Location getLastLocation() {
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+            Log.d("erreur","erreur de permission");
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
+        }
+        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        return locationGPS;
+    }
+
+
 
     protected void onActivityResult(int activite, int resultat, Intent donnees){
         switch(activite){
